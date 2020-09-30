@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20200930211321_Initial.cs" />
+    <Compile Remove="Migrations\20200930211321_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200930211520_Initial.cs" />
+    <Compile Remove="Migrations\20200930211520_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200930211637_Initial.cs" />
+    <Compile Remove="Migrations\20200930211637_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200930211815_Initial.cs" />
+    <Compile Remove="Migrations\20200930211815_Initial.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Concrete\EntityFrameworkCore\Repositories\" />
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SB.Ball3DTournamentSys.Entities\SB.Ball3DTournamentSys.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
