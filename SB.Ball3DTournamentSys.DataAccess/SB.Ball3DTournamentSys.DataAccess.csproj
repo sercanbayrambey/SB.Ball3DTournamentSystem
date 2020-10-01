@@ -28,11 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Concrete\EntityFrameworkCore\Repositories\" />
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SB.Ball3DTournamentSys.Entities\SB.Ball3DTournamentSys.Entities.csproj" />
   </ItemGroup>
 

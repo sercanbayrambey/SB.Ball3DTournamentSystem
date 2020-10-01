@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SB.Ball3DTournamentSys.Entities.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace SB.Ball3DTournamentSys.Entities.Concrete
 {
-    public class TournamentTeamsEntity
+    public class TournamentTeamsEntity  : ITable
     {
         public int Id { get; set; }
 

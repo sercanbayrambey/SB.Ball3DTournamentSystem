@@ -5,33 +5,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SB.Ball3DTournamentSys.Business.Interfaces;
 using SB.Ball3DTournamentSys.Web.Models;
 
 namespace SB.Ball3DTournamentSys.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IGameServerService _gameServerService;
+        public HomeController(IGameServerService gameServerService)
         {
-            _logger = logger;
+            _gameServerService = gameServerService;
         }
 
         public IActionResult Index()
         {
+            var gameServers = _gameServerService.GetAll();
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+     
     }
 }

@@ -8,12 +8,20 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SB.Ball3DTournamentSys.Business.Concrete;
+using SB.Ball3DTournamentSys.Business.Containers;
+using SB.Ball3DTournamentSys.Business.Interfaces;
 using SB.Ball3DTournamentSys.DataAccess.Concrete.Contexts;
+using SB.Ball3DTournamentSys.DataAccess.Concrete.EntityFrameworkCore.Repositories;
+using SB.Ball3DTournamentSys.DataAccess.Interfaces;
+using SB.Ball3DTournamentSys.Entities.Interfaces;
+using SB.Ball3DTournamentSys.Web.Initilaizers;
 
 namespace SB.Ball3DTournamentSys.Web
 {
     public class Startup
     {
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,11 +34,17 @@ namespace SB.Ball3DTournamentSys.Web
         {
             services.AddControllersWithViews();
             services.AddDbContext<B3DTContext>();
+            services.AddScopes();
+                       
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IGameServerService gameServerService, IStadiumService stadiumService)
         {
+
+            DBDefaultDataInitiliazer.SeedData(gameServerService, stadiumService);
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
