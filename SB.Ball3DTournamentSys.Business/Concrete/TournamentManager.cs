@@ -14,5 +14,25 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
         {
             _tournamentDAL = tournamentDAL;
         }
+
+        public List<TournamentEntity> GetAllWithAllTables()
+        {
+            return _tournamentDAL.GetAllWithAllTables();
+        }
+
+        public List<TournamentEntity> GetFinishedTournamentsWithAllTables()
+        {
+            return _tournamentDAL.GetFinishedTournamentsWithAllTables();
+        }
+
+        public List<TournamentEntity> GetStartedTournamentsWithAllTables()
+        {
+            return _tournamentDAL.GetStartedTournamentsWithAllTables();
+        }
+
+        public List<TournamentEntity> GetUpcomingTournamentsWithAllTables()
+        {
+            return _tournamentDAL.GetUpcomingTournamentsWithAllTables();
+        }
     }
 }

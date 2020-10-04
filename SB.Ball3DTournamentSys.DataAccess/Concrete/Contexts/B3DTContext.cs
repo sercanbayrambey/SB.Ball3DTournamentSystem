@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SB.Ball3DTournamentSys.DataAccess.Concrete.Mapping;
 using SB.Ball3DTournamentSys.Entities.Concrete;
 using System;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace SB.Ball3DTournamentSys.DataAccess.Concrete.Contexts
 {
-    public class B3DTContext : DbContext
+    public class B3DTContext : IdentityDbContext<AppUser,AppRole,int>
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

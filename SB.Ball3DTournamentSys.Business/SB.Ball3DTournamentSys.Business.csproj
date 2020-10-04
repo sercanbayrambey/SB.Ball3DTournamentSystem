@@ -5,11 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SB.Ball3DTournamentSys.DataAccess\SB.Ball3DTournamentSys.DataAccess.csproj" />
+    <ProjectReference Include="..\SB.Ball3DTournamentSys.DTO\SB.Ball3DTournamentSys.DTO.csproj" />
   </ItemGroup>
 
 </Project>

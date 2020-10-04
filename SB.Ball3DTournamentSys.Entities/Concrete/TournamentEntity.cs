@@ -14,23 +14,22 @@ namespace SB.Ball3DTournamentSys.Entities.Concrete
         public bool IsFinished { get; set; }
         public DateTime StartDate { get; set; }
 
-        public int ServerTypeId { get; set; }
-
         public bool IsOvertimeEnabled { get; set; }
         public int ScoreLimit { get; set; }
         public bool IsStarted { get; set; }
 
         public int StadiumId { get; set; }
 
-        public StadiumEntity Stadium { get; set; }
 
         public int GameServerId { get; set; }
+
+        public StadiumEntity Stadium { get; set; }
+
         public GameServerEntity GameServer { get; set; }
 
         public List<PlayedGamesEntity> PlayedGames { get; set; }
 
         public List<TournamentTeamsEntity> TournamentTeams { get; set; }
-
 
 
 

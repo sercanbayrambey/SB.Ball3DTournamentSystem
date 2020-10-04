@@ -8,8 +8,8 @@ namespace SB.Ball3DTournamentSys.Entities.Concrete
     public class TeamPlayersEntity : ITable
     {
         public int Id { get; set; }
-      /*  public int UserId { get; set; }
-        public AppUser User { get; set; }*/
+        public int AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
 
         public int TeamId { get; set; }
         public TeamEntity Team{ get; set; }

@@ -1,8 +1,127 @@
-﻿@{
+﻿@model HomePageTournamentViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+@section slider{
+    <header>
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                @*<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>*@
+            </ol>
+
+
+            <div class="carousel-inner" role="listbox">
+                <!-- Slide One - Set the background image for this slide in the line below -->
+                <div class="carousel-item active" style="background-image: url('@Url.Content("~/img/b3d_index_main.jpg")');">
+                    <div class="carousel-caption d-none d-md-block mb-4">
+                        <h1>Welcome to Ball 3D Tournament System</h1>
+                        <h2>Register your team and enjoy!</h2>
+                    </div>
+                </div>
+            </div>
+
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </header>
+}
+
+<!-- Marketing Icons Section -->
+<div class="row mt-4">
+
+    <div class="col-lg-4 mb-4">
+        <div class="card h-100 shadow">
+            <h4 class="card-header"><i class="fas fa-bolt mr-2"></i>Started Tournaments<i class="ml-2 fas fa-arrow-down"></i></h4>
+            <div class="card-body">
+                @if (Model.StartedTournaments.Count <= 0)
+                {
+                    <h6 class="text-info">There is no started tournaments yet.</h6>
+                }
+                else
+                {
+                    @foreach (var item in Model.StartedTournaments)
+                    {
+                        <live-tournaments stadium-name="@item.Stadium.Name" tournament-type="@item.GameType" date="@item.StartDate.ToString("dd/MM/yyyy HH:mm CET") CET" team-count="@item.TournamentTeams.Count"></live-tournaments>
+                    }
+
+                }
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 mb-4">
+        <div class="card h-100 shadow">
+            <h4 class="card-header"><i class="fas fa-hourglass-start mr-2"></i>Upcoming Tournaments<i class="ml-2 fas fa-arrow-down"></i></h4>
+            <div class="card-body">
+                @if (Model.UpcomingTournaments.Count <= 0)
+                {
+                    <h6 class="text-info">There is no upcoming tournaments yet.</h6>
+                }
+                else
+                {
+                    @foreach (var item in Model.UpcomingTournaments)
+                    {
+                        <upcoming-tournaments stadium-name="@item.Stadium.Name" tournament-type="@item.GameType" date="@item.StartDate.ToString("dd/MM/yyyy HH:mm CET")" team-count="@item.TournamentTeams.Count"></upcoming-tournaments>
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4 mb-4">
+        <div class="card h-100 shadow">
+            <h4 class="card-header"><i class="fas fa-hourglass-end mr-2"></i>Finished Tournaments<i class="ml-2 fas fa-arrow-down"></i></h4>
+            <div class="card-body">
+                @if (Model.FinishedTournaments.Count <= 0)
+                {
+                    <h6 class="text-info">There is no finished tournaments yet.</h6>
+                }
+                else
+                {
+                    @foreach (var item in Model.FinishedTournaments)
+                    {
+                        <finished-tournaments stadium-name="@item.Stadium.Name" tournament-type="@item.GameType" date="@item.StartDate.ToString("dd/MM/yyyy HH:mm CET") CET" team-count="@item.TournamentTeams.Count" winner-team-tag="foo*"></finished-tournaments>
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+
 </div>
+<hr />
+<div class="row">
+    <div class="col-lg-6">
+        <h2>What is Ball 3D Tournament System?</h2>
+        <p>Ball 3D tournament system is created by Ball 3D admins. You can:</p>
+        <ul>
+            <li>
+                <strong>Register your team into tournaments.</strong>
+            </li>
+            <li>3v3 Tournaments with awards</li>
+            <li>5v5 Tournaments with awards</li>
+            <li>National tournaments</li>
+            <li>Championships</li>
+        </ul>
+    </div>
+    <div class="col-lg-6">
+        <img class="img-fluid rounded" src="~/img/b3d_sprint_cup.png" alt="">
+    </div>
+</div>
+<!-- /.row -->
+
+<hr>
+

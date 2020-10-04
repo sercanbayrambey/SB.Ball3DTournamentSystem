@@ -13,6 +13,7 @@ namespace SB.Ball3DTournamentSys.DataAccess.Concrete.Mapping
         {
             builder.Property(I => I.Id).UseIdentityColumn();
             builder.HasOne(I => I.Team).WithMany(I => I.Players).HasForeignKey(I => I.TeamId);
+            builder.HasOne(I => I.AppUser).WithMany(I => I.Teams).HasForeignKey(I => I.AppUserId);
         }
     }
 }

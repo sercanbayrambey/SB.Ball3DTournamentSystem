@@ -11,8 +11,8 @@ namespace SB.Ball3DTournamentSys.Entities.Concrete
         public string Name { get; set; }
         public string Tag { get; set; }
 
-        /*public int OwnerId { get; set; }
-        public AppUser User { get; set; }*/
+        public int AppUserId { get; set; }
+        public AppUser AppUser { get; set; }
 
         public List<PlayedGamesEntity> HomeTeams { get; set; }
         public List<PlayedGamesEntity> AwayTeams { get; set; }

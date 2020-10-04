@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30330.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SB.Ball3DTournamentSys.DataAccess", "SB.Ball3DTournamentSys.DataAccess\SB.Ball3DTournamentSys.DataAccess.csproj", "{C488523C-06DE-4141-A5B7-B1CD804EBE80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SB.Ball3DTournamentSys.DataAccess", "SB.Ball3DTournamentSys.DataAccess\SB.Ball3DTournamentSys.DataAccess.csproj", "{C488523C-06DE-4141-A5B7-B1CD804EBE80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SB.Ball3DTournamentSys.Business", "SB.Ball3DTournamentSys.Business\SB.Ball3DTournamentSys.Business.csproj", "{16C1F914-F022-47CF-BAAB-B60084262299}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SB.Ball3DTournamentSys.Business", "SB.Ball3DTournamentSys.Business\SB.Ball3DTournamentSys.Business.csproj", "{16C1F914-F022-47CF-BAAB-B60084262299}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SB.Ball3DTournamentSys.Entities", "SB.Ball3DTournamentSys.Entities\SB.Ball3DTournamentSys.Entities.csproj", "{2F492FCD-DEBA-4DB5-B11A-7BB69C20B17C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SB.Ball3DTournamentSys.Entities", "SB.Ball3DTournamentSys.Entities\SB.Ball3DTournamentSys.Entities.csproj", "{2F492FCD-DEBA-4DB5-B11A-7BB69C20B17C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SB.Ball3DTournamentSys.Web", "SB.Ball3DTournamentSys.Web\SB.Ball3DTournamentSys.Web.csproj", "{D2AD1BDB-7CC7-4DCD-AF6E-524DB23A6936}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SB.Ball3DTournamentSys.Web", "SB.Ball3DTournamentSys.Web\SB.Ball3DTournamentSys.Web.csproj", "{D2AD1BDB-7CC7-4DCD-AF6E-524DB23A6936}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SB.Ball3DTournamentSys.DTO", "SB.Ball3DTournamentSys.DTO\SB.Ball3DTournamentSys.DTO.csproj", "{AD96FE12-8F04-4D22-8130-8650E03AAB66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D2AD1BDB-7CC7-4DCD-AF6E-524DB23A6936}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2AD1BDB-7CC7-4DCD-AF6E-524DB23A6936}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2AD1BDB-7CC7-4DCD-AF6E-524DB23A6936}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD96FE12-8F04-4D22-8130-8650E03AAB66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD96FE12-8F04-4D22-8130-8650E03AAB66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD96FE12-8F04-4D22-8130-8650E03AAB66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD96FE12-8F04-4D22-8130-8650E03AAB66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

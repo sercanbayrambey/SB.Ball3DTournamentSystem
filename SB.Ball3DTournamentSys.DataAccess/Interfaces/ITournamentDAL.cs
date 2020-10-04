@@ -7,5 +7,11 @@ namespace SB.Ball3DTournamentSys.DataAccess.Interfaces
 {
     public interface ITournamentDAL : IGenericDAL<TournamentEntity>
     {
+        List<TournamentEntity> GetAllWithAllTables();
+        List<TournamentEntity> GetFinishedTournamentsWithAllTables();
+        List<TournamentEntity> GetStartedTournamentsWithAllTables();
+        List<TournamentEntity> GetUpcomingTournamentsWithAllTables();
+
+        
     }
 }

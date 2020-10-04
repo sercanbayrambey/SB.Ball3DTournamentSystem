@@ -7,5 +7,10 @@ namespace SB.Ball3DTournamentSys.Business.Interfaces
 {
     public interface ITournamentService : IGenericService<TournamentEntity>
     {
+        List<TournamentEntity> GetAllWithAllTables();
+        List<TournamentEntity> GetFinishedTournamentsWithAllTables();
+        List<TournamentEntity> GetStartedTournamentsWithAllTables();
+        List<TournamentEntity> GetUpcomingTournamentsWithAllTables();
+
     }
 }
