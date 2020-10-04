@@ -20,13 +20,19 @@ namespace SB.Ball3DTournamentSys.DataAccess.Concrete.EntityFrameworkCore.Reposit
         public List<TournamentEntity> GetFinishedTournamentsWithAllTables()
         {
             using var DBContext = new B3DTContext();
-            return DBContext.Tournaments.Where(I=>I.IsFinished).Include(I => I.Stadium).Include(I => I.GameServer).Include(I=>I.TournamentTeams).ToList();
+            return DBContext.Tournaments.Where(I=>I.IsFinished).Include(I => I.Stadium).Include(I => I.GameServer).Include(I=>I.TournamentTeams).ThenInclude(I=>I.Team).ToList();
         }
 
         public List<TournamentEntity> GetStartedTournamentsWithAllTables()
         {
             using var DBContext = new B3DTContext();
-            return DBContext.Tournaments.Where(I => I.IsStarted).Include(I => I.Stadium).Include(I => I.GameServer).Include(I => I.TournamentTeams).ToList();
+            return DBContext.Tournaments.Where(I => I.IsStarted && !I.IsFinished).Include(I => I.Stadium).Include(I => I.GameServer).Include(I => I.TournamentTeams).ToList();
+        }
+
+        public TournamentEntity GetTournamentWithAllTablesById(int id)
+        {
+            using var DBContext = new B3DTContext();
+            return DBContext.Tournaments.Where(I => I.Id == id).Include(I => I.Stadium).Include(I => I.GameServer).Include(I => I.TournamentTeams).ThenInclude(I => I.Team).FirstOrDefault();
         }
 
         public List<TournamentEntity> GetUpcomingTournamentsWithAllTables()

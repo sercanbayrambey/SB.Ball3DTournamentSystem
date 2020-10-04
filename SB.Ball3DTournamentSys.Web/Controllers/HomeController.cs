@@ -24,7 +24,7 @@ namespace SB.Ball3DTournamentSys.Web.Controllers
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
         private readonly ITournamentService _tournamentService;
-        public HomeController(ITournamentService tournamentService,IGameServerService gameServerService, IMapper mapper, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
+        public HomeController(ITournamentService tournamentService, IMapper mapper, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
         {
             _tournamentService = tournamentService;
             _mapper = mapper;

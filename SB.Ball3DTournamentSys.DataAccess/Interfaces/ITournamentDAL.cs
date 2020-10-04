@@ -11,6 +11,7 @@ namespace SB.Ball3DTournamentSys.DataAccess.Interfaces
         List<TournamentEntity> GetFinishedTournamentsWithAllTables();
         List<TournamentEntity> GetStartedTournamentsWithAllTables();
         List<TournamentEntity> GetUpcomingTournamentsWithAllTables();
+        TournamentEntity GetTournamentWithAllTablesById(int id);
 
         
     }

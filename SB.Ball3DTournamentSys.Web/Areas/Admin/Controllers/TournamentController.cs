@@ -15,14 +15,14 @@ namespace SB.Ball3DTournamentSys.Web.Areas.Admin.Controllers
 {
     [Area(ConstAreas.Admin)]
     [Authorize(Roles = ConstRoles.Admin)]
-    public class Tournament : Controller
+    public class TournamentController : Controller
     {
         private readonly IStadiumService _stadiumService;
         private readonly IGameServerService _gameServerService;
         private readonly ITournamentService _tournamentService;
         private readonly IMapper _mapper;
 
-        public Tournament(IStadiumService stadiumService, IGameServerService gameServerService,ITournamentService tournamentService,IMapper mapper)
+        public TournamentController(IStadiumService stadiumService, IGameServerService gameServerService,ITournamentService tournamentService,IMapper mapper)
         {
             _stadiumService = stadiumService;
             _gameServerService = gameServerService;
@@ -31,7 +31,8 @@ namespace SB.Ball3DTournamentSys.Web.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+
+            return View(_mapper.Map<List<TournamentListAllDto>>(_tournamentService.GetAllWithAllTables()));
         }
 
         public IActionResult CreateTournament()

@@ -51,7 +51,7 @@
                 {
                     @foreach (var item in Model.StartedTournaments)
                     {
-                        <live-tournaments stadium-name="@item.Stadium.Name" tournament-type="@item.GameType" date="@item.StartDate.ToString("dd/MM/yyyy HH:mm CET") CET" team-count="@item.TournamentTeams.Count"></live-tournaments>
+                        <live-tournaments Id="@item.Id" stadium-name="@item.Stadium.Name" tournament-type="@item.GameType" date="@item.StartDate.ToString("dd/MM/yyyy HH:mm CET") CET" team-count="@item.TournamentTeams.Count"></live-tournaments>
                     }
 
                 }
@@ -73,7 +73,7 @@
                 {
                     @foreach (var item in Model.UpcomingTournaments)
                     {
-                        <upcoming-tournaments stadium-name="@item.Stadium.Name" tournament-type="@item.GameType" date="@item.StartDate.ToString("dd/MM/yyyy HH:mm CET")" team-count="@item.TournamentTeams.Count"></upcoming-tournaments>
+                        <upcoming-tournaments Id="@item.Id"  stadium-name="@item.Stadium.Name" tournament-type="@item.GameType" date="@item.StartDate.ToString("dd/MM/yyyy HH:mm CET")" team-count="@item.TournamentTeams.Count"></upcoming-tournaments>
                     }
                 }
 
@@ -93,7 +93,14 @@
                 {
                     @foreach (var item in Model.FinishedTournaments)
                     {
-                        <finished-tournaments stadium-name="@item.Stadium.Name" tournament-type="@item.GameType" date="@item.StartDate.ToString("dd/MM/yyyy HH:mm CET") CET" team-count="@item.TournamentTeams.Count" winner-team-tag="foo*"></finished-tournaments>
+                        var winnerTeam = item.TournamentTeams.Where(I => I.IsWinner).FirstOrDefault();
+                        var winnerTag = string.Empty;
+                        if (winnerTeam != null)
+                        {
+                            winnerTag = winnerTeam.Team?.Tag ?? string.Empty;
+                        }
+                      @*  <a asp-action="Index" asp-controller="Tournament" asp-route-id="{Id}"></a>*@
+                        <finished-tournaments Id="@item.Id" stadium-name="@item.Stadium.Name" tournament-type="@item.GameType" date="@item.StartDate.ToString("dd/MM/yyyy HH:mm CET") CET" team-count="@item.TournamentTeams.Count" winner-team-tag="@winnerTag"></finished-tournaments>
                     }
                 }
 

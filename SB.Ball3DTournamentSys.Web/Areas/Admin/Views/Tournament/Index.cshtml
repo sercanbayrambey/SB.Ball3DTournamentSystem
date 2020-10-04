@@ -1,0 +1,49 @@
+﻿@model List<TournamentListAllDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="my-4 text-center">Tournament List</h1>
+
+<table class="table table-hover table-bordered shadow">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Start Date</th>
+        <th>Overtime</th>
+        <th>Score Limit</th>
+        <th>Stadium</th>
+        <th>Server</th>
+        <th>Status</th>
+        <th>+/-</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@(!string.IsNullOrEmpty(item.Description) && item.Description.Length>20 ? item.Description.Substring(0,20) + "..." : item.Description )</td>
+            <td>@item.GameType v @item.GameType</td>
+            <td>@item.StartDate.ToString("dd/MM/yyyy HH:mm CET")</td>
+            <td>@(item.IsOvertimeEnabled ? "Yes" :"No")</td>
+            <td>@item.ScoreLimit</td>
+            <td>@item.Stadium.Name</td>
+            <td>@item.GameServer.ServerName</td>
+            @if (item.IsStarted && !item.IsFinished)
+            {
+                <td class="badge badge-success badge-pill m-1">Playing..</td>
+            }
+            else if (item.IsFinished)
+            {
+
+                <td class="badge badge-dark badge-pill m-1">Finished</td>
+            }
+            else
+            {
+                <td class="badge badge-info badge-pill m-1">Upcoming</td>
+            }
+            <td>sada</td>
+        </tr>
+    }
+</table>
