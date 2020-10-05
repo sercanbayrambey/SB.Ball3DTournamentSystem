@@ -1,0 +1,50 @@
+﻿@model AppUserRegisterDTO
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="my-4 text-center"><i class="fas fa-user-plus mr-2"></i>Register</h1>
+
+<form class="w-75 mx-auto my-2 p-4 shadow" method="post" asp-action="Register">
+    <div class="form-group">
+        <label asp-for="UserName">Username:</label>
+        <span asp-validation-for="UserName" class="text-danger"></span>
+        <input asp-for="UserName" class="form-control" value="" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Email">E Mail:</label>
+        <span asp-validation-for="Email" class="text-danger"></span>
+        <input asp-for="Email" class="form-control" value="" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Login">Ball 3D Nick:</label>
+        <span asp-validation-for="Login" class="text-danger"></span>
+        <input asp-for="Login" class="form-control" value="" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Password">Password:</label>
+        <span asp-validation-for="Password" class="text-danger"></span>
+        <input type="password" asp-for="Password" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ConfirmPassword">Confirm Password:</label>
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        <input type="password" asp-for="ConfirmPassword" class="form-control" />
+    </div>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <p>Do you have account? <a asp-action="Login" class="btn-link">Login.</a></p>
+    <button type="submit" class="btn btn-success">Register</button>
+
+</form>
+
+@section JavaScript{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}
+

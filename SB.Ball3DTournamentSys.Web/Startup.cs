@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -36,10 +40,15 @@ namespace SB.Ball3DTournamentSys.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddFluentValidation();
+
             services.AddDbContext<B3DTContext>();
             services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<B3DTContext>();
+
             services.AddScopes();
+
+            services.AddFluentValidationTransients();
+
             services.AddAutoMapper(typeof(Startup));
 
             services.ConfigureApplicationCookie(opt =>
@@ -50,6 +59,7 @@ namespace SB.Ball3DTournamentSys.Web
                 opt.ExpireTimeSpan = TimeSpan.FromDays(20);
                 opt.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.SameAsRequest;
                 opt.LoginPath = "/Home/Login";
+                opt.AccessDeniedPath = "/Home";
             });
 
             services.Configure<IdentityOptions>(opt =>
@@ -63,6 +73,7 @@ namespace SB.Ball3DTournamentSys.Web
 
             });
 
+         
 
         }
 

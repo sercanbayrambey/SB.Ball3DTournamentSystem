@@ -1,0 +1,43 @@
+﻿@model RegisterTeamDto
+
+@{
+    ViewData["Title"] = "JoinTournament";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2 class="mt-4 text-center">@Model.Tournament.Name <span class="card-text badge badge-success p-2 badge-pill"><strong>@Model.Tournament.GameType v @Model.Tournament.GameType - @Model.Tournament.Stadium.Name</strong></span></h2>
+<hr />
+<h4 class="mt-2">Select your team and register!</h4>
+
+<div class="alert alert-dismissible alert-warning my-2">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <h4 class="alert-heading">Warning!</h4>
+    <p class="mb-0"><strong>You can only register with one team</strong>, select carefully!</p>
+</div>
+
+<form class="p-2 mt-4" asp-action="Register" method="post">
+    <div class="form-group">
+        <div asp-validation-summary="All" class="text-danger my-1"></div>
+
+        <label>Select your team:</label>
+        <select asp-for="TeamId" class="custom-select">
+            @foreach (var item in Model.OwnedTeams)
+            {
+                <option value="@item.Id">@item.Tag</option>
+            }
+        </select>
+
+        <input type="hidden" asp-for="TournamentId" value="@Model.Tournament.Id" />
+        <input type="hidden" asp-for="AppUserId" value="@Model.AppUserId" />
+    </div>
+    <button type="submit" onclick="return confirm('Are you sure you want to register your team?')" class="btn btn-success btn-block"><i class="fas fa-check-square mr-2"></i>Register!</button>
+    <a class="btn btn-primary mt-2 btn-block btn-sm" asp-action="Index" asp-area="" asp-controller="Tournament" asp-route-id="@Model.Tournament.Id"><i class="fas fa-arrow-left mr-2"></i>Back</a>
+</form>
+
+<hr />
+
+@section JavaScript{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}

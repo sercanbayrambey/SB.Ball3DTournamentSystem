@@ -7,5 +7,6 @@ namespace SB.Ball3DTournamentSys.Business.Interfaces
 {
     public interface ITeamPlayersService :IGenericService<TeamPlayersEntity>
     {
+        List<TeamEntity> GetUserTeamsById(int id);
     }
 }

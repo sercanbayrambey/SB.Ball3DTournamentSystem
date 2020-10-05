@@ -15,9 +15,9 @@ namespace SB.Ball3DTournamentSys.Entities.Concrete
         public int TeamId { get; set; }
         public TeamEntity Team { get; set; }
 
-        public bool IsWinner { get; set; }
+        public bool IsWinner { get; set; } = false;
 
-        public bool IsConfirmed { get; set; }
+        public bool IsConfirmed { get; set; } = false;
 
     }
 }

@@ -14,5 +14,10 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
         {
             _teamDAL = teamDAL;
         }
+
+        public List<TeamEntity> GetOwnedTeamsByUserId(int id)
+        {
+            return _teamDAL.GetOwnedTeamsByUserId(id);
+        }
     }
 }

@@ -17,6 +17,8 @@
     <Compile Remove="Migrations\20201004123558_AddedColumnAppUser.Designer.cs" />
     <Compile Remove="Migrations\20201004123758_AddedColumnAppUser.cs" />
     <Compile Remove="Migrations\20201004123758_AddedColumnAppUser.Designer.cs" />
+    <Compile Remove="Migrations\20201005150007_TournamentTeamsDefaultValues.cs" />
+    <Compile Remove="Migrations\20201005150007_TournamentTeamsDefaultValues.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,33 @@
+﻿@model CreateTeamDto
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="my-4 text-center"><i class="fas fa-user-plus mr-2"></i>Create Team</h1>
+
+<form class="w-75 mx-auto my-2 p-4 shadow" method="post" asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Name">Team Name:</label>
+        <span asp-validation-for="Name" class="text-danger"></span>
+        <input maxlength="32    " asp-for="Name" class="form-control" value="" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Tag">Team Tag:</label>
+        <span asp-validation-for="Tag" class="text-danger"></span>
+        <input maxlength="5" asp-for="Tag" class="form-control" value="" />
+    </div>
+
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <a asp-action="Index" class="btn btn-primary">Back</a>
+    <button type="submit" class="btn btn-success">Create Team</button>
+
+</form>
+
+@section JavaScript{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}
+

@@ -49,6 +49,7 @@ namespace SB.Ball3DTournamentSys.Web.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(AppUserLoginDTO model)
         {
             if (ModelState.IsValid)
@@ -61,6 +62,38 @@ namespace SB.Ball3DTournamentSys.Web.Controllers
                         return RedirectToAction("Index","Home");
                 }
                 ModelState.AddModelError("", "Username or pass are invalid.");
+            }
+
+            return View(model);
+        }
+
+
+        public IActionResult Register()
+        {
+            return View(new AppUserRegisterDTO());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(AppUserRegisterDTO model)
+        {
+            if(ModelState.IsValid)
+            {
+                var user = _mapper.Map<AppUser>(model);
+                var registerResult = await _userManager.CreateAsync(user, model.Password);
+
+                if (registerResult.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, "member");
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    foreach (var item in registerResult.Errors)
+                    {
+                        ModelState.AddModelError("", item.Description);
+                    }
+                }
             }
 
             return View(model);

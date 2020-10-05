@@ -14,6 +14,6 @@ namespace SB.Ball3DTournamentSys.Entities.Concrete
         public int TeamId { get; set; }
         public TeamEntity Team{ get; set; }
 
-        public DateTime JoinDate { get; set; }
+        public DateTime JoinDate { get; set; } = DateTime.Now;
     }
 }

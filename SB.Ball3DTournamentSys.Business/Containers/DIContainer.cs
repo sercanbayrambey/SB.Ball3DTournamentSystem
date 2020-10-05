@@ -9,7 +9,7 @@ using System.Text;
 
 namespace SB.Ball3DTournamentSys.Business.Containers
 {
-    public static class CustomExtensions
+    public static class DIContainer
     {
         public static void AddScopes(this IServiceCollection services)
         {

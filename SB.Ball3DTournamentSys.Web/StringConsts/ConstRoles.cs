@@ -8,6 +8,10 @@ namespace SB.Ball3DTournamentSys.Web.StringConsts
     public static class ConstRoles
     {
         public const string Admin = "admin";
-        public const string Member = "member";
+
+        /// <summary>
+        /// Admin is member too.
+        /// </summary>
+        public const string Member = "member,admin";
     }
 }

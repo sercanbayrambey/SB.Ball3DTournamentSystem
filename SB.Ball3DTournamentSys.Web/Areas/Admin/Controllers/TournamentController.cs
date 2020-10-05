@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using SB.Ball3DTournamentSys.Business.Interfaces;
 using SB.Ball3DTournamentSys.DTO.DTOs.Tournament;
 using SB.Ball3DTournamentSys.Entities.Concrete;
+using SB.Ball3DTournamentSys.Web.StaticVariables;
 using SB.Ball3DTournamentSys.Web.StringConsts;
 
 namespace SB.Ball3DTournamentSys.Web.Areas.Admin.Controllers
@@ -39,6 +40,7 @@ namespace SB.Ball3DTournamentSys.Web.Areas.Admin.Controllers
         {
             ViewBag.Stadiums = new SelectList(_stadiumService.GetAll(), "Id", "Name");
             ViewBag.GameServers = new SelectList(_gameServerService.GetAll(), "Id", "ServerName");
+            ViewBag.CetTime = StaticVars.CET_TIME;
             return View(new CreateTournamentDto());
         }
 

@@ -15,11 +15,11 @@
     <div class="form-group">
         <label asp-for="Password">Password:</label>
         <span asp-validation-for="Password" class="text-danger"></span>
-        <input type="password" asp-for="Password" class="form-control"  />
+        <input type="password" asp-for="Password" class="form-control" />
     </div>
 
     <div class="form-check">
-        <input  asp-for="RememberMe" class="form-check-input"  value="true" checked />
+        <input asp-for="RememberMe" class="form-check-input" value="true" checked />
         <label class="form-check-label" asp-for="RememberMe">Remember me?</label>
         <span asp-validation-for="RememberMe" class="text-danger"></span>
     </div>
@@ -27,6 +27,10 @@
     <p>Dont you have account? <a asp-action="Register" class="btn-link">Register.</a></p>
     <button type="submit" class="btn btn-success">Login</button>
 
-
 </form>
+
+@section JavaScript{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}
 

@@ -7,12 +7,17 @@ using System.Text;
 
 namespace SB.Ball3DTournamentSys.Business.Concrete
 {
-    public class TeamPlayersManager : GenericManager<TeamPlayersEntity>,ITeamPlayersService
+    public class TeamPlayersManager : GenericManager<TeamPlayersEntity>, ITeamPlayersService
     {
-        private readonly ITeamPlayersDAL _teamPlayersService;
-        public TeamPlayersManager(ITeamPlayersDAL teamPlayersService):base(teamPlayersService)
+        private readonly ITeamPlayersDAL _teamPlayersDAL;
+        public TeamPlayersManager(ITeamPlayersDAL teamPlayersDAL) : base(teamPlayersDAL)
         {
-            _teamPlayersService = teamPlayersService;
+            _teamPlayersDAL = teamPlayersDAL;
+        }
+
+        public List<TeamEntity> GetUserTeamsById(int id)
+        {
+            return _teamPlayersDAL.GetUserTeamsById(id);
         }
     }
 }
