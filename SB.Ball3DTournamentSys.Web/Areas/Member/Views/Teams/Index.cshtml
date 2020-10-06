@@ -16,6 +16,7 @@
         <th>Team Tag</th>
         <th>Role</th>
         <th><i class="fas fa-edit mr-2"></i><strong>Edit</strong> | Delete<i class="fas fa-trash-alt ml-2"></i></th>
+
     </tr>
     @foreach (var item in Model)
     {
@@ -31,8 +32,79 @@
             }
             else
             {
-                <td><a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit mr-2"></i><strong>Edit</strong></a> | <a asp-route-id="@item.Id" asp-action="Remove">Delete<i class="fas fa-trash-alt ml-2"></i></a> | <a asp-action="GenerateInviteLink"><span class="badge badge-success badge-pill p-2" style="font-size:small"><i class="fas fa-envelope mr-2"></i>Generate Invite Link</span></a></td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit mr-2"></i><strong>Edit</strong></a> | <a asp-route-id="@item.Id" asp-action="Remove">Delete<i class="fas fa-trash-alt ml-2"></i></a> | <a href="#" id="btnGenerateInviteLink" onclick="GenerateInviteLink(@item.Id)">
+                        <span class="badge badge-success badge-pill p-2" style="font-size:small"><i class="fas fa-envelope mr-2"></i>Generate Invite Link</span>
+                    </a>
+                    <span class="spinner-border spinner-border-sm" style="display:none" id="spinner-@item.Id" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </span>
+                    <span style="display:none" id="inviteLink-@item.Id">
+                        <span><strong>Invite Link:</strong> <a style="font-size:small" id="a-@item.Id" href=""></a></span> <a onclick="CopyToClipboard(@item.Id)" href="#" id="copyBtn-@item.Id" >
+                        <span class="badge badge-light badge-pill p-2 ml-2" style="font-size:small"><i class="fas fa-copy mr-2"></i>Copy Invite Link</span>
+                        </a>
+                    </span>
+                </td>
             }
         </tr>
     }
 </table>
+
+@section JavaScript{
+
+    <script>
+
+        function GenerateInviteLink(id) {
+            var getUrl = window.location;
+            var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+            var postURL = baseUrl + "/Teams/GenerateInviteLink";
+            var teamId = id;
+            var spinnerId = "#spinner-" + teamId;
+            console.log(postURL);
+            $.ajax({
+                type: "POST",
+                url: postURL,
+                data: { teamId: id },
+                success: function (data) {
+                    data = JSON.parse(data)
+                    var fullInviteLink = baseUrl + "/" + data.inviteCode;
+                    $(spinnerId).hide();
+                    PassInviteLinkToHtml(fullInviteLink, teamId);
+                },
+
+                beforeSend: function () {
+                    $(spinnerId).show();
+                },
+
+                error: function (error) {
+                    console.log(error.responseText);
+                },
+                dataType: "text"
+            });
+        }
+
+        function PassInviteLinkToHtml(inviteLink, id) {
+            var mainInviteSpanId = "#inviteLink-" + id;
+            var aElementId = "#a-" + id;
+            $(aElementId).attr("href", inviteLink);
+            $(aElementId).text(inviteLink);
+            $(mainInviteSpanId).show();
+        }
+
+
+        function CopyToClipboard(id) {
+            var aElementId = "#a-" + id;
+            var str = $(aElementId).text();
+            const el = document.createElement('textarea');
+            el.value = str;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            alert("Copied.");
+        }
+
+
+    </script>
+
+}

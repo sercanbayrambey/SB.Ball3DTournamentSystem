@@ -18,8 +18,10 @@ namespace SB.Ball3DTournamentSys.Entities.Concrete
         public List<PlayedGamesEntity> AwayTeams { get; set; }
 
         public List<TeamPlayersEntity> Players { get; set; }
-
+                
         public List<TournamentTeamsEntity> TournamentTeams { get; set; }
+
+        public string InviteCode { get; set; }
 
     }
 }
