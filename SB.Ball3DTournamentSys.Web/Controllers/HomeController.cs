@@ -84,7 +84,7 @@ namespace SB.Ball3DTournamentSys.Web.Controllers
 
                 if (registerResult.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, "member");
+                    await _userManager.AddToRoleAsync(user, ConstRoles.Member);
                     return RedirectToAction("Login");
                 }
                 else
