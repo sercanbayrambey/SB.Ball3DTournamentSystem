@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using SB.Ball3DTournamentSys.DTO.DTOs.AppUser;
+using SB.Ball3DTournamentSys.DTO.DTOs.AppUserDto;
 using SB.Ball3DTournamentSys.Web.StringConsts;
 using System;
 using System.Collections.Generic;

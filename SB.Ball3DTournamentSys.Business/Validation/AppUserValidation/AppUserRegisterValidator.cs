@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using SB.Ball3DTournamentSys.DTO.DTOs.AppUser;
+using SB.Ball3DTournamentSys.DTO.DTOs.AppUserDto;
 using System;
 using System.Collections.Generic;
 using System.Text;

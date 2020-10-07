@@ -33,16 +33,24 @@
             else
             {
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit mr-2"></i><strong>Edit</strong></a> | <a asp-route-id="@item.Id" asp-action="Remove">Delete<i class="fas fa-trash-alt ml-2"></i></a> | <a href="#" id="btnGenerateInviteLink" onclick="GenerateInviteLink(@item.Id)">
+                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit mr-2"></i><strong>Edit</strong></a> | <a asp-route-id="@item.Id" asp-action="Remove">Delete<i class="fas fa-trash-alt ml-2"></i></a> | <button class="btn btn-link" href="#" id="btnGenerateInviteLink-@item.Id" onclick="GenerateInviteLink(@item.Id)">
                         <span class="badge badge-success badge-pill p-2" style="font-size:small"><i class="fas fa-envelope mr-2"></i>Generate Invite Link</span>
-                    </a>
+                    </button>
                     <span class="spinner-border spinner-border-sm" style="display:none" id="spinner-@item.Id" role="status">
                         <span class="sr-only">Loading...</span>
                     </span>
-                    <span style="display:none" id="inviteLink-@item.Id">
-                        <span><strong>Invite Link:</strong> <a style="font-size:small" id="a-@item.Id" href=""></a></span> <a onclick="CopyToClipboard(@item.Id)" href="#" id="copyBtn-@item.Id" >
-                        <span class="badge badge-light badge-pill p-2 ml-2" style="font-size:small"><i class="fas fa-copy mr-2"></i>Copy Invite Link</span>
+                    <span style="@(String.IsNullOrEmpty(item.InviteCode) ? "display:none" : "")" id="inviteLink-@item.Id">
+                        <a onclick="CopyToClipboard(@item.Id)" href="#" id="copyBtn-@item.Id">
+                            <span class="badge badge-primary badge-pill p-2" style="font-size:small"><i class="fas fa-copy mr-2"></i>Copy Invite Link</span>
                         </a>
+                        @if (String.IsNullOrEmpty(item.InviteCode))
+                        {
+                            <span><strong>Link:</strong> <a style="font-size:small" id="a-@item.Id" href=""></a></span>
+                        }
+                        else
+                        {
+                            <span><strong>Link: </strong> <a asp-action="JoinTeam" asp-route-c="@item.InviteCode" style="font-size:small" id="a-@item.Id" >@Url.Action("JoinTeam","Teams", new {c=item.InviteCode}, Context.Request.Scheme)</a></span>
+                        }
                     </span>
                 </td>
             }
@@ -56,10 +64,11 @@
 
         function GenerateInviteLink(id) {
             var getUrl = window.location;
-            var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-            var postURL = baseUrl + "/Teams/GenerateInviteLink";
+            var baseUrl = getUrl.protocol + "//" + getUrl.host;
+            var postURL = baseUrl + "/Member/Teams/GenerateInviteLink";
             var teamId = id;
             var spinnerId = "#spinner-" + teamId;
+            var senderButtonId = "#btnGenerateInviteLink-" + teamId;
             console.log(postURL);
             $.ajax({
                 type: "POST",
@@ -67,17 +76,21 @@
                 data: { teamId: id },
                 success: function (data) {
                     data = JSON.parse(data)
-                    var fullInviteLink = baseUrl + "/" + data.inviteCode;
+                    var fullInviteLink = baseUrl + "/jointeam?c=" + data.inviteCode;
                     $(spinnerId).hide();
+                  
                     PassInviteLinkToHtml(fullInviteLink, teamId);
                 },
 
                 beforeSend: function () {
+                    $(senderButtonId).attr("disabled", "disabled");
                     $(spinnerId).show();
                 },
 
                 error: function (error) {
-                    console.log(error.responseText);
+                    $(senderButtonId).attr("disabled", "enabled");
+                    $(spinnerId).hide();
+                    PassErrorToHtml(teamId);
                 },
                 dataType: "text"
             });
@@ -88,6 +101,15 @@
             var aElementId = "#a-" + id;
             $(aElementId).attr("href", inviteLink);
             $(aElementId).text(inviteLink);
+            $(mainInviteSpanId).show();
+        }
+
+        function PassErrorToHtml(id) {
+            var mainInviteSpanId = "#inviteLink-" + id;
+            var aElementId = "#a-" + id;
+            $(aElementId).text("There is an error creating link!");
+            $(aElementId).attr("href", "#");
+            $(aElementId).addClass("text-danger");
             $(mainInviteSpanId).show();
         }
 

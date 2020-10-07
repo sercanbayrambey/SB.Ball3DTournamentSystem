@@ -15,6 +15,11 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
             _teamPlayersDAL = teamPlayersDAL;
         }
 
+        public void AddPlayerToTeamByUserId(TeamEntity team, int userId)
+        {
+            _teamPlayersDAL.AddPlayerToTeamByUserId(team, userId);
+        }
+
         public List<TeamEntity> GetUserTeamsById(int id)
         {
             return _teamPlayersDAL.GetUserTeamsById(id);

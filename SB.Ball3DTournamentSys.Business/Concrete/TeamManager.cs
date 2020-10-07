@@ -15,9 +15,19 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
             _teamDAL = teamDAL;
         }
 
+        public string GenerateInviteLink()
+        {
+            return Guid.NewGuid().ToString();
+        }
+
         public List<TeamEntity> GetOwnedTeamsByUserId(int id)
         {
             return _teamDAL.GetOwnedTeamsByUserId(id);
+        }
+
+        public TeamEntity GetTeamByInviteCodeWithUserTable(string inviteCode)
+        {
+            return _teamDAL.GetTeamByInviteCodeWithUserTable(inviteCode);
         }
     }
 }

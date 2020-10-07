@@ -8,5 +8,7 @@ namespace SB.Ball3DTournamentSys.DataAccess.Interfaces
     public interface ITeamPlayersDAL : IGenericDAL<TeamPlayersEntity>
     {
         List<TeamEntity> GetUserTeamsById(int id);
+        void AddPlayerToTeamByUserId(TeamEntity team, int userId);
+
     }
 }

@@ -8,5 +8,8 @@ namespace SB.Ball3DTournamentSys.Business.Interfaces
     public interface ITeamService: IGenericService<TeamEntity>
     {
         List<TeamEntity> GetOwnedTeamsByUserId(int id);
+        string GenerateInviteLink();
+        TeamEntity GetTeamByInviteCodeWithUserTable(string inviteCode);
+        
     }
 }

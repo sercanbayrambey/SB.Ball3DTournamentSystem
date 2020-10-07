@@ -78,11 +78,56 @@ namespace SB.Ball3DTournamentSys.Web.Areas.Member.Controllers
                 return Unauthorized();
 
             Response.StatusCode = Convert.ToInt32(HttpStatusCode.OK);
-            var inviteCode = Guid.NewGuid();
+            var inviteCode = _teamService.GenerateInviteLink();
             team.InviteCode = inviteCode.ToString();
             _teamService.Update(team);
 
             return Json(new { inviteCode });
+        }
+
+
+        [Route("jointeam")]
+        public IActionResult JoinTeam(string c)
+        {
+            if (String.IsNullOrEmpty(c))
+                return NotFound();
+
+            var team = _teamService.GetTeamByInviteCodeWithUserTable(c);
+            ViewBag.InvitedUserId = GetLoggedUser().Id;
+
+            if (team == null)
+            {
+                ModelState.AddModelError("", "Team is not found or invite link expired! Create a new invite link!");
+                return View(new JoinTeamDto());
+            }
+
+            return View(_mapper.Map<JoinTeamDto>(team));
+
+        }
+
+        [HttpPost]
+        [Route("jointeam")]
+        public IActionResult JoinTeam(JoinTeamDto model)
+        {
+            if (model.UserIdToBeJoined != GetLoggedUser().Id)
+                return Unauthorized();
+
+            if (ModelState.IsValid)
+            {
+                var team = _teamService.GetTeamByInviteCodeWithUserTable(model.InviteCode);
+                if (team == null)
+                {
+                    ModelState.AddModelError("", "Team is not found or invite link expired! Create a new invite link!");
+                    return View(model);
+                }
+
+                _teamPlayersService.AddPlayerToTeamByUserId(team, GetLoggedUser().Id);
+
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
+
         }
     }
 }

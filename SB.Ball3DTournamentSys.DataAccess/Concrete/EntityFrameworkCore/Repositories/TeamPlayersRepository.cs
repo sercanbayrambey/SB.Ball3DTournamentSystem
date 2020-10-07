@@ -11,6 +11,11 @@ namespace SB.Ball3DTournamentSys.DataAccess.Concrete.EntityFrameworkCore.Reposit
 {
     public class TeamPlayersRepository : EfGenericRepository<TeamPlayersEntity>, ITeamPlayersDAL
     {
+        public void AddPlayerToTeamByUserId(TeamEntity team, int userId)
+        {
+            Add(new TeamPlayersEntity { AppUserId = userId, TeamId = team.Id });
+        }
+
         public List<TeamEntity> GetUserTeamsById(int id)
         {
             using var context = new B3DTContext();

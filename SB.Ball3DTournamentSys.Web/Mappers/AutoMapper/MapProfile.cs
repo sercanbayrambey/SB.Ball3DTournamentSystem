@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using SB.Ball3DTournamentSys.DTO.DTOs.AppUser;
+using SB.Ball3DTournamentSys.DTO.DTOs.AppUserDto;
 using SB.Ball3DTournamentSys.DTO.DTOs.GameServers;
 using SB.Ball3DTournamentSys.DTO.DTOs.Team;
 using SB.Ball3DTournamentSys.DTO.DTOs.Tournament;
@@ -34,6 +34,12 @@ namespace SB.Ball3DTournamentSys.Business.Mappers.AutoMapper
 
             CreateMap<TournamentListDto, TournamentEntity>();
             CreateMap<TournamentEntity, TournamentListDto>();
+
+            CreateMap<TeamListAllDto, TeamEntity>();
+            CreateMap<TeamEntity, TeamListAllDto>();
+
+            CreateMap<JoinTeamDto, TeamEntity>();
+            CreateMap<TeamEntity, JoinTeamDto>();
 
 
 

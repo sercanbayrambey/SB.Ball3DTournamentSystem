@@ -16,5 +16,11 @@ namespace SB.Ball3DTournamentSys.DataAccess.Concrete.EntityFrameworkCore.Reposit
             using var context = new B3DTContext();
             return context.Teams.Where(I => I.AppUserId == id).ToList();
         }
+
+        public TeamEntity GetTeamByInviteCodeWithUserTable(string inviteCode)
+        {
+            using var context = new B3DTContext();
+            return context.Teams.Where(I => I.InviteCode == inviteCode).Include(I=>I.AppUser).FirstOrDefault();
+        }
     }
 }

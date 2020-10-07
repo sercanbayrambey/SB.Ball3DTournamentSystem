@@ -1,0 +1,41 @@
+﻿@model JoinTeamDto
+@{
+    ViewData["Title"] = "JoinTeam";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mt-4 text-center"><i class="fas fa-envelope-open mr-2"></i>Join Team <span class="card-text badge badge-success p-2 badge-pill"><strong>@Model.Tag - (@Model.Name)</strong></span></h2>
+<hr />
+<h4 class="mt-2">Are you sure you want to join this team?</h4>
+<div class="bg-light  my-2 p-2">
+    <div class="row">
+        <div class="col-md-6">
+            <h5><strong><i class="fas fa-signature mr-2"></i>Team Name:</strong> @Model.Tag</h5>
+            <h5><strong><i class="fas fa-tag mr-2"></i>Team Tag:</strong> @Model.Name</h5>
+            <h5><strong><i class="fas fa-user-shield mr-2"></i>Owner:</strong> @(Model.AppUser?.Login ?? "")</h5>
+        </div>
+        <div class="col-md-6">
+            <div class="float-right mr-1 my-auto" style="font-size:60px">
+                <i class="fas fa-envelope-open"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form class="p-2 mt-4" asp-action="JoinTeam" method="post">
+    <input type="hidden" asp-for="@Model.UserIdToBeJoined" value="@ViewBag.InvitedUserId" />
+    <input type="hidden" asp-for="@Model.InviteCode" value="@Model.InviteCode" />
+    <div class="form-group">
+        <div asp-validation-summary="All" class="my-1 bg-danger font-weight-bolder text-light" style="font-size:30px"></div>
+    </div>
+    <button type="submit" onclick="return confirm('Are you sure you want to join this team?')" class="btn btn-success btn-lg btn-block"><i class="fas fa-check mr-2"></i>Join!</button>
+    <a class="btn btn-primary mt-2 btn-block btn-sm" asp-action="Index" asp-area="" asp-controller="Home"><i class="fas fa-arrow-left mr-2"></i>Back</a>
+</form>
+
+<hr />
+
+@section JavaScript{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}
+

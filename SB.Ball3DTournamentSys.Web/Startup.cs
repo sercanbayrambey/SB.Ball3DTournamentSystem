@@ -97,8 +97,8 @@ namespace SB.Ball3DTournamentSys.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
 

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SB.Ball3DTournamentSys.Business.Interfaces;
-using SB.Ball3DTournamentSys.DTO.DTOs.AppUser;
+using SB.Ball3DTournamentSys.DTO.DTOs.AppUserDto;
 using SB.Ball3DTournamentSys.DTO.DTOs.GameServers;
 using SB.Ball3DTournamentSys.DTO.DTOs.Tournament;
 using SB.Ball3DTournamentSys.Entities.Concrete;
