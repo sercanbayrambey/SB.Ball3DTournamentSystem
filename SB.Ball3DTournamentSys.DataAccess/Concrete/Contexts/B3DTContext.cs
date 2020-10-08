@@ -36,6 +36,8 @@ namespace SB.Ball3DTournamentSys.DataAccess.Concrete.Contexts
         public DbSet<TournamentEntity> Tournaments { get; set; }
         public DbSet<TournamentTeamsEntity> TournamentTeams { get; set; }
 
+        public DbSet<TournamentBracketRoundEntity> TournamentBracketRounds { get; set; }
+
 
     }
 }

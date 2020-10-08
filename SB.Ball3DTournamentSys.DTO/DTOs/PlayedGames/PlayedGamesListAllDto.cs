@@ -1,17 +1,15 @@
-﻿using SB.Ball3DTournamentSys.Entities.Interfaces;
+﻿using SB.Ball3DTournamentSys.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SB.Ball3DTournamentSys.Entities.Concrete
+namespace SB.Ball3DTournamentSys.DTO.DTOs.PlayedGames
 {
-    public class PlayedGamesEntity : ITable
+    public class PlayedGamesListAllDto
     {
         public int Id { get; set; }
         public int RoundMatchId { get; set; }
         public int RoundNumber { get; set; }
-
-        public int RoundId { get; set; }
         public TournamentBracketRoundEntity PlayedGamesRound { get; set; }
 
         public int HomeTeamScore { get; set; }
@@ -24,10 +22,5 @@ namespace SB.Ball3DTournamentSys.Entities.Concrete
         public TeamEntity AwayTeam { get; set; }
 
         public bool IsFinished { get; set; } = false;
-
-        /*       public int TournamentId { get; set; }
-               public TournamentEntity Tournament { get; set; }
-       */
-
     }
 }

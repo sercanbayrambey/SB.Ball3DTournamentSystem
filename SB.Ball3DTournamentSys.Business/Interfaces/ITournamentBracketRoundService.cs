@@ -7,5 +7,6 @@ namespace SB.Ball3DTournamentSys.Business.Interfaces
 {
     public interface ITournamentBracketRoundService : IGenericService<TournamentBracketRoundEntity>
     {
+        int GetRoundIdByTournamentId(int tournamentId);
     }
 }

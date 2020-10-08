@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SB.Ball3DTournamentSys.DataAccess.Concrete.Contexts;
 
 namespace SB.Ball3DTournamentSys.DataAccess.Migrations
 {
     [DbContext(typeof(B3DTContext))]
-    partial class B3DTContextModelSnapshot : ModelSnapshot
+    [Migration("20201008203037_RoundTableAdded")]
+    partial class RoundTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -245,28 +247,22 @@ namespace SB.Ball3DTournamentSys.DataAccess.Migrations
                         .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AwayTeamId")
+                    b.Property<int>("AwayTeamId")
                         .HasColumnType("int");
 
                     b.Property<int>("AwayTeamScore")
                         .HasColumnType("int");
 
-                    b.Property<int?>("HomeTeamId")
+                    b.Property<int>("HomeTeamId")
                         .HasColumnType("int");
 
                     b.Property<int>("HomeTeamScore")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsFinished")
-                        .HasColumnType("bit");
-
                     b.Property<int>("RoundId")
                         .HasColumnType("int");
 
                     b.Property<int>("RoundMatchId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoundNumber")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -506,12 +502,14 @@ namespace SB.Ball3DTournamentSys.DataAccess.Migrations
                     b.HasOne("SB.Ball3DTournamentSys.Entities.Concrete.TeamEntity", "AwayTeam")
                         .WithMany("AwayTeams")
                         .HasForeignKey("AwayTeamId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("SB.Ball3DTournamentSys.Entities.Concrete.TeamEntity", "HomeTeam")
                         .WithMany("HomeTeams")
                         .HasForeignKey("HomeTeamId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("SB.Ball3DTournamentSys.Entities.Concrete.TournamentBracketRoundEntity", "PlayedGamesRound")
                         .WithMany("PlayedGames")

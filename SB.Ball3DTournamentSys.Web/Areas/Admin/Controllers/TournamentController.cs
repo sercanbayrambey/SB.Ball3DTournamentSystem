@@ -22,12 +22,14 @@ namespace SB.Ball3DTournamentSys.Web.Areas.Admin.Controllers
         private readonly IGameServerService _gameServerService;
         private readonly ITournamentService _tournamentService;
         private readonly IMapper _mapper;
+        private readonly ITeamService _teamService;
 
-        public TournamentController(IStadiumService stadiumService, IGameServerService gameServerService,ITournamentService tournamentService,IMapper mapper)
+        public TournamentController(IStadiumService stadiumService, IGameServerService gameServerService,ITournamentService tournamentService,IMapper mapper, ITeamService teamService)
         {
             _stadiumService = stadiumService;
             _gameServerService = gameServerService;
             _tournamentService = tournamentService;
+            _teamService = teamService;
             _mapper = mapper;
         }
         public IActionResult Index()
@@ -42,6 +44,14 @@ namespace SB.Ball3DTournamentSys.Web.Areas.Admin.Controllers
             ViewBag.GameServers = new SelectList(_gameServerService.GetAll(), "Id", "ServerName");
             ViewBag.CetTime = StaticVars.CET_TIME;
             return View(new CreateTournamentDto());
+        }
+
+        [Route("s")]
+        public IActionResult StartTournament()
+        {
+            List<TeamEntity> Teams = _teamService.GetAll();
+            _tournamentService.StartTournament(Teams, 3);
+            return View();
         }
 
         [HttpPost]

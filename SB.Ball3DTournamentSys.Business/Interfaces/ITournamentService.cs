@@ -12,7 +12,7 @@ namespace SB.Ball3DTournamentSys.Business.Interfaces
         List<TournamentEntity> GetStartedTournamentsWithAllTables();
         List<TournamentEntity> GetUpcomingTournamentsWithAllTables();
         TournamentEntity GetTournamentWithAllTablesById(int id);
-        void StartTournament(List<TeamEntity> teams);
+        void StartTournament(List<TeamEntity> teams, int tournamentId);
 
     }
 }

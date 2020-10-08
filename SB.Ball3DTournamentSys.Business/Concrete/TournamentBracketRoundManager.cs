@@ -14,5 +14,10 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
         {
             _tournamentBracketRoundDAL = tournamentBracketRoundDAL;
         }
+
+        public int GetRoundIdByTournamentId(int tournamentId)
+        {
+            return _tournamentBracketRoundDAL.GetRoundIdByTournamentId(tournamentId);
+        }
     }
 }

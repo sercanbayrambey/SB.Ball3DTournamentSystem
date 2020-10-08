@@ -7,5 +7,6 @@ namespace SB.Ball3DTournamentSys.DataAccess.Interfaces
 {
     public interface ITournamentBracketRoundDAL :IGenericDAL<TournamentBracketRoundEntity>
     {
+        int GetRoundIdByTournamentId(int tournamentId);
     }
 }
