@@ -17,8 +17,6 @@ namespace SB.Ball3DTournamentSys.DataAccess.Concrete.Mapping
             builder.HasOne(I => I.Stadium).WithMany(I => I.Tournaments).HasForeignKey(I => I.StadiumId);
 
             builder.HasOne(I => I.GameServer).WithMany(I => I.Tournaments).HasForeignKey(I => I.GameServerId);
-
-
             
 
         }

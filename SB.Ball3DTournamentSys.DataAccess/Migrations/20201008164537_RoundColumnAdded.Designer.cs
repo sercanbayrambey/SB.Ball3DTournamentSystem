@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SB.Ball3DTournamentSys.DataAccess.Concrete.Contexts;
 
 namespace SB.Ball3DTournamentSys.DataAccess.Migrations
 {
     [DbContext(typeof(B3DTContext))]
-    partial class B3DTContextModelSnapshot : ModelSnapshot
+    [Migration("20201008164537_RoundColumnAdded")]
+    partial class RoundColumnAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -258,9 +260,6 @@ namespace SB.Ball3DTournamentSys.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("RoundId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RoundMatchId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

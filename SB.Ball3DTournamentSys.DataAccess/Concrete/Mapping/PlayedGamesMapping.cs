@@ -15,8 +15,8 @@ namespace SB.Ball3DTournamentSys.DataAccess.Concrete.Mapping
 
             builder.HasOne(I => I.HomeTeam).WithMany(I => I.HomeTeams).HasForeignKey(I => I.HomeTeamId).OnDelete(DeleteBehavior.NoAction);
             builder.HasOne(I => I.AwayTeam).WithMany(I => I.AwayTeams).HasForeignKey(I => I.AwayTeamId).OnDelete(DeleteBehavior.NoAction);
-            builder.HasOne(I => I.Tournament).WithMany(I => I.PlayedGames).HasForeignKey(I => I.TournamentId);
-
+            /*builder.HasOne(I => I.Tournament).WithMany(I => I.PlayedGames).HasForeignKey(I => I.TournamentId);*/
+            builder.HasOne(I => I.PlayedGamesRound).WithMany(I => I.PlayedGames).HasForeignKey(I => I.RoundId);
         }
     }
 }

@@ -20,18 +20,15 @@ namespace SB.Ball3DTournamentSys.Entities.Concrete
 
         public int StadiumId { get; set; }
 
-
         public int GameServerId { get; set; }
 
         public StadiumEntity Stadium { get; set; }
 
         public GameServerEntity GameServer { get; set; }
 
-        public List<PlayedGamesEntity> PlayedGames { get; set; }
+      /*  public List<PlayedGamesEntity> PlayedGames { get; set; }*/
 
         public List<TournamentTeamsEntity> TournamentTeams { get; set; }
-
-
-
+        public List<TournamentBracketRoundEntity> PlayedGamesRounds { get; set; }
     }
 }

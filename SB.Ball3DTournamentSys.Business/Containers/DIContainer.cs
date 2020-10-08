@@ -24,6 +24,7 @@ namespace SB.Ball3DTournamentSys.Business.Containers
             services.AddScoped<ITournamentService, TournamentManager>();
             services.AddScoped<ITournamentTeamsService, TournamentTeamsManager>();
             services.AddScoped<IAppUserService, AppUserManager>();
+            services.AddScoped<ITournamentBracketRoundService, TournamentBracketRoundManager>();
 
             services.AddScoped<IGameServerDAL, GameServerRepository>();
             services.AddScoped<IPlayedGamesDAL, PlayedGamesRepository>();
@@ -34,6 +35,7 @@ namespace SB.Ball3DTournamentSys.Business.Containers
             services.AddScoped<ITournamentTeamsDAL, TournamentTeamsRepository>();
             services.AddScoped<IGameServerDAL, GameServerRepository>();
             services.AddScoped<IAppUserDAL, AppUserRepository>();
+            services.AddScoped<ITournamentBracketRoundDAL, TournamentBracketRoundRepository>();
         }
     }
 }
