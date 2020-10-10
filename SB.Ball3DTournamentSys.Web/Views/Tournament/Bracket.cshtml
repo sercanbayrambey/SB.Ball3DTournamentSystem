@@ -1,13 +1,15 @@
-﻿@model List<SB.Ball3DTournamentSys.DTO.DTOs.PlayedGames.PlayedGamesListAllDto>
+﻿@model List<PlayedGamesListAllDto>
 @{
     ViewData["Title"] = "Bracket";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int currentRoundNumber = 0;
+    var roundCount = Model.Select(I => I.RoundNumber).Max();
+
 }
+<link href="~/css/jquery.bracket.min.css" rel="stylesheet" />
 
 <h1 class="mt-3">Bracket</h1>
-
-<table class="table table-hover w-75 mx-auto mt-4" >
+<table class="table table-hover w-75 mx-auto mt-4">
 
 
     @foreach (var item in Model)
@@ -15,7 +17,7 @@
         if (item.RoundNumber != currentRoundNumber)
         {
             <tr class="my-2"><th>ROUND @item.RoundNumber</th></tr>
-             currentRoundNumber = item.RoundNumber;
+            currentRoundNumber = item.RoundNumber;
         }
 
         <tr>
@@ -25,3 +27,83 @@
     }
 
 </table>
+
+<br />
+
+<div class="demo">
+</div>
+
+
+
+@section JavaScript{
+    @* <script src="~/js/jquery.gracket.js"></script>*@
+    <script src="~/js/jquery.bracket.min.js"></script>
+    <script>
+
+        var singleElimination = {
+            "teams": [              // Matchups
+                ["Team 1", "Team 2"], // First match
+                ["Team 3", "Team 4"]  // Second match
+            ],
+            "results": [            // List of brackets (single elimination, so only one bracket)
+                [                     // List of rounds in bracket
+                    [                   // First round in this bracket
+                        [1, 2],           // Team 1 vs Team 2
+                        [3, 4]            // Team 3 vs Team 4
+                    ],
+                    [                   // Second (final) round in single elimination bracket
+                        [5, 6],           // Match for first place
+                        [7, 8]            // Match for 3rd place
+                    ]
+                ]
+            ]
+        }
+
+        var saveData = {
+            "teams":
+                [["X", "foo"], ["foo*", null], ["TSK", null], ["nWo", null], ["nWo2", null], ["nWo3", null], ["nWo4", null], ["nWo5", null]],
+            "results": [
+
+                [
+                    [1, 4], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null],
+                ],
+
+                [
+                    [3, 2], [null, null], [null, null], [null, null]],
+                [
+                    [null, null], [null, null]],
+                [
+                    [null, null]
+                ]
+            ]
+        };
+
+        var data = {
+            "teams":
+                [
+                    ["foo*", "nWo"], ["-X-", null], ["MGS", null], ["GOLD", null], ["ASR", null], ["Elit", null], ["TSK", null], ["ABC", null]
+                ],
+            "results": [
+                [[null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null]],
+                [
+                    [null, null], [null, null], [null, null], [null, null]],
+                [
+                    [null, null], [null, null]], [[null, null]
+                ]
+            ]
+        }
+
+        $(function () {
+            $('.demo').bracket({
+                init: data /* data to initialize the bracket with */
+            })
+        })
+
+
+
+
+    </script>
+
+}
+
+

@@ -7,5 +7,7 @@ namespace SB.Ball3DTournamentSys.DataAccess.Interfaces
 {
     public interface ITournamentTeamsDAL : IGenericDAL<TournamentTeamsEntity>
     {
+
+        int GetTotalTeamCountByTournamentId(int tournamentId);
     }
 }

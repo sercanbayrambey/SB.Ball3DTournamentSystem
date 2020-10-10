@@ -29,6 +29,7 @@ namespace SB.Ball3DTournamentSys.DataAccess.Concrete.EntityFrameworkCore.Reposit
             return DBContext.Tournaments.Where(I => I.IsStarted && !I.IsFinished).Include(I => I.Stadium).Include(I => I.GameServer).Include(I => I.TournamentTeams).ToList();
         }
 
+
         public TournamentEntity GetTournamentWithAllTablesById(int id)
         {
             using var DBContext = new B3DTContext();

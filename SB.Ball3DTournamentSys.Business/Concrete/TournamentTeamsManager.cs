@@ -14,5 +14,10 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
         {
             _tournamentTeamsDAL = tournamentTeamsDAL;
         }
+
+        public int GetTotalTeamCountByTournamentId(int tournamentId)
+        {
+            return _tournamentTeamsDAL.GetTotalTeamCountByTournamentId(tournamentId);
+        }
     }
 }

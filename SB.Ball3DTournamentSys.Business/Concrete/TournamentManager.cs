@@ -34,6 +34,7 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
             return _tournamentDAL.GetStartedTournamentsWithAllTables();
         }
 
+
         public TournamentEntity GetTournamentWithAllTablesById(int id)
         {
             return _tournamentDAL.GetTournamentWithAllTablesById(id);

@@ -8,7 +8,7 @@ namespace SB.Ball3DTournamentSys.Business.Interfaces
     public interface IFixtureService
     {
         void GenerateFixture();
-        void GenerateNextRounds(int teamCount, int round, int tournamentId);
+        void GenerateNextRounds(int teamCount, int round, int tournamentId, int? passedTeamCount);
         void SaveEntitiesToDb();
         PlayedGamesEntity FindTheNextTableForGame(PlayedGamesEntity playedGame);
 

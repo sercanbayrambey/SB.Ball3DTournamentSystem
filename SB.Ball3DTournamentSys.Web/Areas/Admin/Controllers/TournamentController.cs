@@ -24,7 +24,7 @@ namespace SB.Ball3DTournamentSys.Web.Areas.Admin.Controllers
         private readonly IMapper _mapper;
         private readonly ITeamService _teamService;
 
-        public TournamentController(IStadiumService stadiumService, IGameServerService gameServerService,ITournamentService tournamentService,IMapper mapper, ITeamService teamService)
+        public TournamentController(IStadiumService stadiumService, IGameServerService gameServerService, ITournamentService tournamentService, IMapper mapper, ITeamService teamService)
         {
             _stadiumService = stadiumService;
             _gameServerService = gameServerService;
@@ -57,11 +57,11 @@ namespace SB.Ball3DTournamentSys.Web.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult CreateTournament(CreateTournamentDto model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var tournamentEntity = _mapper.Map<TournamentEntity>(model);
                 _tournamentService.Add(tournamentEntity);
-                return RedirectToAction("Index", "Home", new {area=String.Empty });
+                return RedirectToAction("Index", "Home", new { area = String.Empty });
             }
             return View();
         }
