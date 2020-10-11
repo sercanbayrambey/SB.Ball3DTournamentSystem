@@ -8,5 +8,7 @@ namespace SB.Ball3DTournamentSys.Business.Interfaces
     public interface ITournamentTeamsService :IGenericService<TournamentTeamsEntity>
     {
         int GetTotalTeamCountByTournamentId(int tournamentId);
+        List<TeamEntity> GetTournamentConfirmedTeamsByTournamentId(int tournamentId);
+        void ConfirmRegisterStatus(TeamEntity team, int tournamentId);
     }
 }

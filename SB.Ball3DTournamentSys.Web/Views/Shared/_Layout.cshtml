@@ -21,11 +21,11 @@
 <body>
 
     <!--Navigation-->
-     @await Component.InvokeAsync("TopNavbar") 
+    @await Component.InvokeAsync("TopNavbar")
     <!-- Navigation -->
- 
-    @RenderSection("slider",false)
-  
+
+    @RenderSection("slider", false)
+
 
     <!-- Page Content -->
     <div class="container">
@@ -36,13 +36,22 @@
     <footer class="py-5 bg-primary">
         <div class="container">
             <p class="m-0 text-center text-white">Copyright &copy; Ball 3D Tournament System @DateTime.Now.Year</p>
+            <h5 class="m-0 text-center text-white mt-2">
+                CET Time
+            </h5>
+            <p class="m-0 text-center text-white">
+                <iframe src="https://freesecure.timeanddate.com/clock/i7hydwl9/n262/fn6/fs20/fcfff/tct/pct/th1" frameborder="0" width="80" height="26" allowTransparency="true"></iframe>
+
+            </p>
+
+
         </div>
         <!-- /.container -->
     </footer>
 
     <!-- Bootstrap core JavaScript -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/js/bootstrap.min.js"></script>
 
     @RenderSection("JavaScript", false)
 

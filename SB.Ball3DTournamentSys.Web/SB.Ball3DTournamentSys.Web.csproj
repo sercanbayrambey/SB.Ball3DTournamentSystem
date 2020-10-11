@@ -9,7 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js">
+    <Content Update="wwwroot\lib\bootstrap\dist\js\js\bootstrap.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\js\js\bootstrap.min.js.map">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

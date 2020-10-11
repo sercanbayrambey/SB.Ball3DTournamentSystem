@@ -51,7 +51,7 @@
                 {
                     @foreach (var item in Model.StartedTournaments)
                     {
-                        <live-tournaments Id="@item.Id" stadium-name="@item.Stadium.Name" tournament-type="@item.GameType" date="@item.StartDate.ToString("dd/MM/yyyy HH:mm CET") CET" team-count="@item.TournamentTeams.Count"></live-tournaments>
+                        <live-tournaments Id="@item.Id" stadium-name="@item.Stadium.Name" tournament-type="@item.GameType" date="@item.StartDate.ToString("dd/MM/yyyy HH:mm CET")" team-count="@item.TournamentTeams.Count"></live-tournaments>
                     }
 
                 }
@@ -100,7 +100,7 @@
                             winnerTag = winnerTeam.Team?.Tag ?? string.Empty;
                         }
                       @*  <a asp-action="Index" asp-controller="Tournament" asp-route-id="{Id}"></a>*@
-                        <finished-tournaments Id="@item.Id" stadium-name="@item.Stadium.Name" tournament-type="@item.GameType" date="@item.StartDate.ToString("dd/MM/yyyy HH:mm CET") CET" team-count="@item.TournamentTeams.Count" winner-team-tag="@winnerTag"></finished-tournaments>
+                        <finished-tournaments Id="@item.Id" stadium-name="@item.Stadium.Name" tournament-type="@item.GameType" date="@item.StartDate.ToString("dd/MM/yyyy HH:mm CET")" team-count="@item.TournamentTeams.Count" winner-team-tag="@winnerTag"></finished-tournaments>
                     }
                 }
 

@@ -1,0 +1,41 @@
+﻿
+@model StartTournamentDto
+@{
+    ViewData["Title"] = "Start Tournament";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mt-4 text-center"><i class="fas fa-play-circle mr-2"></i>Start Tournament <span class="card-text badge badge-success p-2 badge-pill"><strong>@Model.GameType v @Model.GameType - @Model.Stadium.Name</strong></span></h2>
+<hr />
+<h4 class="mt-2">Are you sure you want to start this tournament?</h4>
+<div class="bg-light  my-2 p-2">
+    <div class="row">
+        <div class="col-md-6">
+            <h5><strong><i class="fas fa-signature mr-2"></i>Tournament Name:</strong> @Model.Name</h5>
+            <h5><strong><i class="fas fa-tag mr-2"></i>Tournament Info:</strong> @Model.GameType v @Model.GameType - @Model.Stadium.Name</h5>
+            <h5><strong><i class="fas fa-user-shield mr-2"></i>Tournament Start Date:</strong> @Model.StartDate.ToString("dd/MM/yyyy HH:mm CET")</h5>
+            <h5><strong><i class="fas fa-check-circle mr-2"></i>Registered (Confirmed) Team Count:</strong> @Model.TournamentTeams.Where(I=>I.IsConfirmed).Count()</h5>
+        </div>
+        <div class="col-md-6">
+            <div class="float-right mr-1 my-auto" style="font-size:60px">
+                <i class="fas fa-play-circle"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form class="p-2 mt-4" asp-action="Start" method="post">
+    <input type="hidden" asp-for="@Model.Id" value="@Model.Id" />
+    <div class="form-group">
+        <div asp-validation-summary="All" class="my-1 bg-danger font-weight-bolder text-light" style="font-size:30px"></div>
+    </div>
+    <button type="submit" onclick="return confirm('Are you sure you want to start this team?')" class="btn btn-success btn-lg btn-block"><i class="fas fa-check mr-2"></i>Start!</button>
+    <a class="btn btn-primary mt-2 btn-block btn-sm" asp-action="Index" asp-area="" asp-controller="Home"><i class="fas fa-arrow-left mr-2"></i>Back</a>
+</form>
+
+<hr />
+
+@section JavaScript{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}

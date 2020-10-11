@@ -40,58 +40,7 @@
     <script src="~/js/jquery.bracket.min.js"></script>
     <script>
 
-        var singleElimination = {
-            "teams": [              // Matchups
-                ["Team 1", "Team 2"], // First match
-                ["Team 3", "Team 4"]  // Second match
-            ],
-            "results": [            // List of brackets (single elimination, so only one bracket)
-                [                     // List of rounds in bracket
-                    [                   // First round in this bracket
-                        [1, 2],           // Team 1 vs Team 2
-                        [3, 4]            // Team 3 vs Team 4
-                    ],
-                    [                   // Second (final) round in single elimination bracket
-                        [5, 6],           // Match for first place
-                        [7, 8]            // Match for 3rd place
-                    ]
-                ]
-            ]
-        }
-
-        var saveData = {
-            "teams":
-                [["X", "foo"], ["foo*", null], ["TSK", null], ["nWo", null], ["nWo2", null], ["nWo3", null], ["nWo4", null], ["nWo5", null]],
-            "results": [
-
-                [
-                    [1, 4], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null],
-                ],
-
-                [
-                    [3, 2], [null, null], [null, null], [null, null]],
-                [
-                    [null, null], [null, null]],
-                [
-                    [null, null]
-                ]
-            ]
-        };
-
-        var data = {
-            "teams":
-                [
-                    ["foo*", "nWo"], ["-X-", null], ["MGS", null], ["GOLD", null], ["ASR", null], ["Elit", null], ["TSK", null], ["ABC", null]
-                ],
-            "results": [
-                [[null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null]],
-                [
-                    [null, null], [null, null], [null, null], [null, null]],
-                [
-                    [null, null], [null, null]], [[null, null]
-                ]
-            ]
-        }
+        var data = { "teams": [["foo*", "ASR"], ["nWo", "GOLD"], ["-X-", "MGS"], ["Elit", null], ["TSK", null], ["CBU", null], ["YUNUS", null], ["ISMET", null], ["CAN", null], ["CANO", null], ["ABILER", null], ["GOLDT", null], ["CUCU", null], ["OZS", null], ["zyn", null], ["AK", null]], "results": [[[null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null]], [[null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null], [null, null]], [[null, null], [null, null], [null, null], [null, null]], [[null, null], [null, null]], [[null, null]]] };
 
         $(function () {
             $('.demo').bracket({

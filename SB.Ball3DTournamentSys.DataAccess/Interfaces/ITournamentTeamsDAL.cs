@@ -9,5 +9,7 @@ namespace SB.Ball3DTournamentSys.DataAccess.Interfaces
     {
 
         int GetTotalTeamCountByTournamentId(int tournamentId);
+        List<TeamEntity> GetTournamentConfirmedTeamsByTournamentId(int tournamentId);
+        void ConfirmRegisterStatus(TeamEntity team, int tournamentId);
     }
 }

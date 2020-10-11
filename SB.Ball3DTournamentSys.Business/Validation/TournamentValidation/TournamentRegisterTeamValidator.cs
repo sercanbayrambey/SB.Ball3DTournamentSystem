@@ -56,7 +56,7 @@ namespace SB.Ball3DTournamentSys.Business.Validation.TournamentValidation
 
             foreach (var item in tournament.TournamentTeams)
             {
-                if(item.Team.AppUserId == dto.AppUserId)
+                if(item.Team.AppUserId == dto.AppUserId) // if user registered his own team
                 {
                     return true;
                 }

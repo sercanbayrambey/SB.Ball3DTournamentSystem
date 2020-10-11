@@ -3,41 +3,58 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/css/jquery.bracket.min.css" rel="stylesheet" />
 <h2 class="mt-4">@Model.Name <span class="card-text badge badge-success p-2 badge-pill"><strong>@Model.GameType v @Model.GameType - @Model.Stadium.Name</strong></span></h2>
 <hr />
+
 <ul class="nav nav-tabs my-4 border-light">
     <li class="nav-item">
         <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#profile">Rules</a>
+        <a class="nav-link" data-toggle="tab" href="#profile">Profile</a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link disabled" href="#">Bracket</a>
+        <a class="nav-link" data-toggle="tab" href="#bracket">Bracket</a>
     </li>
 
     <li class="nav-item">
         <a class="nav-link disabled" href="#">Sign Up & Confirm</a>
     </li>
 </ul>
+
 <div id="myTabContent" class="tab-content">
     <div class="tab-pane fade show active" id="home">
         <div class="row">
+
             <div class="col-md-6">
                 <div class="card border-dark mb-3">
-                    <div class="card-header">Description</div>
+                    <div class="card-header"><i class="fas fa-quote-left mr-2"></i>Description</div>
                     <div class="card-body">
-                      
+
                         <p class="card-text">@Model.Description</p>
                     </div>
                 </div>
+
+                @if (User.IsInRole("admin"))
+                {
+                    <div class="card  border-dark mb-3">
+                        <div class="card-header bg-warning text-white"><i class="fas fa-user-shield mr-2"></i>Admin Actions</div>
+                        <div class="card-body">
+                            <a asp-action="Start" asp-controller="Tournament" asp-area="Admin" asp-route-id="@Model.Id" class ="btn btn-success btn-block"><i class="fas fa-play-circle mr-2"></i>Start Tournament</a>
+                            
+                        </div>
+                    </div>
+                }
             </div>
-     
+
+
+
             <div class="col-md-6">
                 <div class="card border-dark mb-3" style="max-height:400px;overflow:auto">
-                    <div class="card-header">Registered Teams</div>
+                    <div class="card-header"><i class="fas fa-list mr-2"></i>Registered Teams</div>
                     <div class="card-body">
                         @foreach (var item in Model.TournamentTeams)
                         {
@@ -50,26 +67,93 @@
                                 <div><i class="fas fa-check-square" style="color:gold"></i><strong> @item.Team.Name - (@item.Team.Tag) </strong>(Waiting for confirm...) </div>
                             }
                         }
+                        @if (!Model.IsStarted)
+                        {
+                            <div class="alert-info mt-2 text-light p-1"><i class="fas fa-info-circle mr-2"></i>Confirmations will start at <strong>@Model.StartDate.AddMinutes(-30).ToString("dd/MM/yyyy HH:mm CET")</strong></div>
+                        }
+                        else
+                        {
+                            <div class="alert-info mt-2 text-light p-1"><i class="fas fa-info-circle mr-2"></i><strong>Tournament is started!</strong></div>
+                        }
                     </div>
                 </div>
-                <a asp-action="Register" asp-controller="Tournament" asp-area="Member" asp-route-id="@Model.Id" class="btn btn-success btn-block">Register your team!</a>
-                <a asp-action="Index" asp-controller="Home" asp-area=""  class="btn btn-light btn-block"><i class="fas fa-arrow-left mr-2"></i>Back</a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    if (Model.StartDate.AddMinutes(-30) <= DateTime.Now)
+                    {
+                        <a asp-action="Confirm" asp-controller="Tournament" asp-area="Member" asp-route-id="@Model.Id" class="btn btn-info btn-block"><i class="fas fa-check-circle mr-2"></i>Confirm Registration & Fast Register</a>
+                    }
+                    else
+                    {
+                        <a asp-action="Register" asp-controller="Tournament" asp-area="Member" asp-route-id="@Model.Id" class="btn btn-success btn-block"><i class="fas fa-check-circle mr-2"></i>Register your team!</a>
+
+                    }
+
+                }
+                else
+                {
+                    <a asp-action="Login" asp-controller="Home" asp-area="" class="btn btn-info btn-block">You need to login for register your team to this tournament!</a>
+                }
+                <a asp-action="Index" asp-controller="Home" asp-area="" class="btn btn-light btn-block mb-2"><i class="fas fa-arrow-left mr-2"></i>Back</a>
 
             </div>
+
+
+
         </div>
 
 
 
-        <div class="tab-pane fade" id="profile">
-            <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
-        </div>
-        <div class="tab-pane fade" id="dropdown1">
-            <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
-        </div>
-        <div class="tab-pane fade" id="dropdown2">
-            <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater.</p>
+    </div>
+
+
+    <div class="tab-pane fade" id="profile">
+        <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+    </div>
+
+    <div class="tab-pane fade my-4 pl-5 w-75 mx-auto border border-light" id="bracket">
+        <div class="bracket">
         </div>
     </div>
+
 </div>
+
+
+@section JavaScript{
+    <script src="~/js/jquery.bracket.min.js"></script>
+    <script>
+        var bracketData;
+        var isBracketActivated;
+       $(document).ready(function () {
+           $.ajax({
+               method: "POST",
+               url: "/getBracket",
+               contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+               dataType: "json",
+               data: {tournamentId:@Model.Id},
+               success: function (data) {
+                   bracketData = data;
+               },
+               error: function (e) {
+                   console.log(e);
+               }
+           })
+
+       });
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            var target = $(e.target).attr("href") // activated tab
+            if (target == "#bracket" && !isBracketActivated) {
+                $('.bracket').bracket({
+
+                    init: bracketData /* data to initialize the bracket with */
+                })
+                isBracketActivated = true;
+            }
+        });
+
+    </script>
+
+}
 
 

@@ -10,30 +10,35 @@
 
 <div><a asp-action="Create" class="btn btn-info my-2">Create New Team</a></div>
 
-<table class="table table-hover table-bordered shadow">
-    <tr>
-        <th>Team Name</th>
-        <th>Team Tag</th>
-        <th>Role</th>
-        <th><i class="fas fa-edit mr-2"></i><strong>Edit</strong> | Delete<i class="fas fa-trash-alt ml-2"></i></th>
-
-    </tr>
+<table class="table table-hover table-bordered shadow ">
     @foreach (var item in Model)
     {
+
         bool isOwner = ViewBag.CurrentUserId == item.AppUserId;
+
+        if(Model.IndexOf(item)==0)
+        {
+            <tr>
+                <th>Team Name</th>
+                <th>Team Tag</th>
+                <th>Role</th>
+                <th><i class="fas fa-edit mr-1"></i><strong>Edit</strong> | Delete<i class="fas fa-trash-alt ml-1"></i></th>
+                <th><i class="fas fa-envelope-open mr-2"></i><strong>Invite Link</strong></th>
+            </tr>
+        }
+
+
         <tr>
             <td>@item.Name</td>
             <td>@item.Tag</td>
             <td class="@(isOwner ? "text-info" : "text-primary")">@(isOwner ? "OWNER" : "USER")</td>
-            @if (!isOwner)
-            {
-                <td><a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit mr-2"></i><strong>Edit</strong></a> | <a asp-route-id="@item.Id" asp-action="Remove">Delete<i class="fas fa-trash-alt ml-2"></i></a></td>
-                <td></td>
-            }
-            else
+            @if (isOwner)
             {
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit mr-2"></i><strong>Edit</strong></a> | <a asp-route-id="@item.Id" asp-action="Remove">Delete<i class="fas fa-trash-alt ml-2"></i></a> | <button class="btn btn-link" href="#" id="btnGenerateInviteLink-@item.Id" onclick="GenerateInviteLink(@item.Id)">
+                    <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit mr-1"></i><strong>Edit</strong></a> | <a asp-route-id="@item.Id" asp-action="Delete">Delete<i class="fas fa-trash-alt ml-1"></i></a> |
+                </td>
+                <td>
+                    <button class="btn btn-link" href="#" id="btnGenerateInviteLink-@item.Id" onclick="GenerateInviteLink(@item.Id)">
                         <span class="badge badge-success badge-pill p-2" style="font-size:small"><i class="fas fa-envelope mr-2"></i>Generate Invite Link</span>
                     </button>
                     <span class="spinner-border spinner-border-sm" style="display:none" id="spinner-@item.Id" role="status">
@@ -49,11 +54,12 @@
                         }
                         else
                         {
-                            <span><strong>Link: </strong> <a asp-action="JoinTeam" asp-route-c="@item.InviteCode" style="font-size:small" id="a-@item.Id" >@Url.Action("JoinTeam","Teams", new {c=item.InviteCode}, Context.Request.Scheme)</a></span>
+                            <span><strong>Link: </strong> <a asp-action="JoinTeam" asp-route-c="@item.InviteCode" style="font-size:small" id="a-@item.Id">@Url.Action("JoinTeam", "Teams", new { c = item.InviteCode }, Context.Request.Scheme)</a></span>
                         }
                     </span>
                 </td>
             }
+           
         </tr>
     }
 </table>

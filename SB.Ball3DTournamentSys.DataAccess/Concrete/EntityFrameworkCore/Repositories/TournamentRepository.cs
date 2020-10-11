@@ -41,5 +41,13 @@ namespace SB.Ball3DTournamentSys.DataAccess.Concrete.EntityFrameworkCore.Reposit
             using var DBContext = new B3DTContext();
             return DBContext.Tournaments.Where(I => !I.IsFinished && !I.IsStarted).Include(I => I.Stadium).Include(I => I.GameServer).Include(I => I.TournamentTeams).ToList();
         }
+
+        public void StartById(int id)
+        {
+            using var DBContext = new B3DTContext();
+            var tournament = DBContext.Tournaments.Where(I => I.Id == id).FirstOrDefault();
+            tournament.IsStarted = true;
+            Update(tournament);
+        }
     }
 }

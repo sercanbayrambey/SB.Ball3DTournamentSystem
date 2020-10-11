@@ -23,14 +23,16 @@ namespace SB.Ball3DTournamentSys.Web.Areas.Admin.Controllers
         private readonly ITournamentService _tournamentService;
         private readonly IMapper _mapper;
         private readonly ITeamService _teamService;
+        private readonly ITournamentTeamsService _tournamentTeamsService;
 
-        public TournamentController(IStadiumService stadiumService, IGameServerService gameServerService, ITournamentService tournamentService, IMapper mapper, ITeamService teamService)
+        public TournamentController(IStadiumService stadiumService, IGameServerService gameServerService, ITournamentService tournamentService, IMapper mapper, ITeamService teamService, ITournamentTeamsService tournamentTeamsService)
         {
             _stadiumService = stadiumService;
             _gameServerService = gameServerService;
             _tournamentService = tournamentService;
             _teamService = teamService;
             _mapper = mapper;
+            _tournamentTeamsService = tournamentTeamsService;
         }
         public IActionResult Index()
         {
@@ -46,12 +48,20 @@ namespace SB.Ball3DTournamentSys.Web.Areas.Admin.Controllers
             return View(new CreateTournamentDto());
         }
 
-        [Route("s")]
-        public IActionResult StartTournament()
+        public IActionResult Start(int id)
         {
-            List<TeamEntity> Teams = _teamService.GetAll();
-            _tournamentService.StartTournament(Teams, 3);
-            return View();
+            return View(_mapper.Map<StartTournamentDto>(_tournamentService.GetTournamentWithAllTablesById(id)));
+        }
+
+        [HttpPost]
+        public IActionResult Start(StartTournamentDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                _tournamentService.StartById(model.Id,_tournamentTeamsService.GetTournamentConfirmedTeamsByTournamentId(model.Id));
+                return RedirectToAction("Index", "Tournament", new { area = String.Empty, id = model.Id });
+            }
+            return View(model);
         }
 
         [HttpPost]
