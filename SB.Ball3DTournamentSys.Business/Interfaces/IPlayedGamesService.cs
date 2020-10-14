@@ -19,5 +19,7 @@ namespace SB.Ball3DTournamentSys.Business.Interfaces
        TeamEntity UpdateScore(PlayedGamesEntity playedGameToBeEdited, int homeTeamScore, int awayTeamScore);
         PlayedGamesEntity GetByIdWithTeamTable(int id);
         List<PlayedGamesEntity> GetAllByRoundId(int roundId);
+
+        List<PlayedGamesEntity> GetTournamentGamesByUserIdWithAll(int userId, int tournamentId);
     }
 }

@@ -12,8 +12,8 @@ namespace SB.Ball3DTournamentSys.DTO.DTOs.PlayedGames
         public int RoundNumber { get; set; }
         public TournamentBracketRoundEntity PlayedGamesRound { get; set; }
 
-        public int HomeTeamScore { get; set; }
-        public int AwayTeamScore { get; set; }
+        public int? HomeTeamScore { get; set; }
+        public int? AwayTeamScore { get; set; }
 
         public int? HomeTeamId { get; set; }
         public TeamEntity HomeTeam { get; set; }

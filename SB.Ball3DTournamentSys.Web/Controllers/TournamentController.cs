@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SB.Ball3DTournamentSys.Business.Concrete;
 using SB.Ball3DTournamentSys.Business.Interfaces;
 using SB.Ball3DTournamentSys.DTO.DTOs.PlayedGames;
 using SB.Ball3DTournamentSys.DTO.DTOs.Tournament;
+using SB.Ball3DTournamentSys.Entities.Concrete;
+using SB.Ball3DTournamentSys.Web.BaseControllers;
 using SB.Ball3DTournamentSys.Web.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +15,13 @@ using System.Security.Principal;
 
 namespace SB.Ball3DTournamentSys.Web.Controllers
 {
-    public class TournamentController : Controller
+    public class TournamentController : IdentityBaseController
     {
         private readonly IMapper _mapper;
         private readonly ITournamentService _tournamentService;
         private readonly IPlayedGamesService _playedGamesService;
         private readonly ITournamentTeamsService _tournamentTeamsService;
-        public TournamentController(IMapper mapper, ITournamentService tournamentService, IPlayedGamesService playedGamesService, ITournamentTeamsService tournamentTeamsService)
+        public TournamentController(IMapper mapper, ITournamentService tournamentService, IPlayedGamesService playedGamesService, ITournamentTeamsService tournamentTeamsService, UserManager<AppUser> userManager) : base(userManager) 
         {
             _mapper = mapper;
             _tournamentService = tournamentService;
@@ -35,13 +38,14 @@ namespace SB.Ball3DTournamentSys.Web.Controllers
             if (model == null)
                 return NotFound();
 
-            return View(model);
-        }
+            if(model.IsStarted && IsLogged())
+            {
+                ViewBag.Games = _mapper.Map<List<PlayedGamesListAllDto>>(_playedGamesService.GetTournamentGamesByUserIdWithAll(GetLoggedUser().Id, model.Id));
+            }
 
-        public IActionResult Bracket()
-        {
-            var gameFixture = _playedGamesService.GetPlayedGamesWithAllTablesByTournamentId(3);
-            return View(_mapper.Map<List<PlayedGamesListAllDto>>(gameFixture));
+
+
+            return View(model);
         }
 
 
@@ -54,11 +58,10 @@ namespace SB.Ball3DTournamentSys.Web.Controllers
             return Json(bm.GenerateBracketObject());
         }
 
-
-            public IActionResult UpdateScore(int matchId)
+        public IActionResult UpdateScore(int matchId)
         {
             var playedGame = _playedGamesService.GetById(matchId);
-            var winnerTeam = _playedGamesService.UpdateScore(playedGame, 3, 2);
+            var winnerTeam = _playedGamesService.UpdateScore(playedGame, 2, 3);
             FixtureManager fm = new FixtureManager(_playedGamesService);
             var nextTable = fm.FindTheNextTableForGame(playedGame);
             if (nextTable.HomeTeamId == null)
@@ -66,7 +69,9 @@ namespace SB.Ball3DTournamentSys.Web.Controllers
             else
                 nextTable.AwayTeamId = winnerTeam.Id;
             _playedGamesService.Update(nextTable);
-            return RedirectToAction("Bracket");
+            return RedirectToAction("Index");
         }
+
+    
     }
 }

@@ -53,6 +53,7 @@ namespace SB.Ball3DTournamentSys.Web.Areas.Member.Controllers
         public IActionResult Register(RegisterTeamDto model)
         {
             var loggedUserId = _userManager.FindByNameAsync(User.Identity.Name).Result.Id;
+            var tournament = _tournamentService.GetById(model.TournamentId);
 
             if (loggedUserId != model.AppUserId)
                 return Unauthorized();
@@ -63,7 +64,7 @@ namespace SB.Ball3DTournamentSys.Web.Areas.Member.Controllers
                 {
                     TeamId = model.TeamId,
                     TournamentId = model.TournamentId,
-                    IsConfirmed = DateTime.Now.AddMinutes(-30) <= DateTime.Now ? true : false
+                    IsConfirmed = tournament.StartDate.AddMinutes(-30) <= DateTime.Now ? true : false
                 });
 
                 return RedirectToAction("Index", "Tournament", new { area = "", id = model.TournamentId });

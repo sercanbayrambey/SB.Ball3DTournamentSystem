@@ -2,6 +2,11 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    List<PlayedGamesListAllDto> teamOwnerGameList = null;
+    if (ViewBag.Games != null)
+    {
+        teamOwnerGameList = ViewBag.Games;
+    }
 }
 <link href="~/css/jquery.bracket.min.css" rel="stylesheet" />
 <h2 class="mt-4">@Model.Name <span class="card-text badge badge-success p-2 badge-pill"><strong>@Model.GameType v @Model.GameType - @Model.Stadium.Name</strong></span></h2>
@@ -9,20 +14,18 @@
 
 <ul class="nav nav-tabs my-4 border-light">
     <li class="nav-item">
-        <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
+        <a class="nav-link active" data-toggle="tab" href="#home"><i class="fas fa-home mr-2"></i>Home</a>
+    </li>
+
+
+    <li class="nav-item">
+        <a class="@(Model.IsStarted ? "nav-link" : "nav-link disabled")" data-toggle="tab" href="#bracket"><i class="fas fa-trophy mr-2"></i>Bracket</a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#profile">Profile</a>
+        <a class="@(Model.IsStarted ? "nav-link" : "nav-link disabled")" data-toggle="tab" href="#matches"><i class="fas fa-futbol mr-2"></i>My Matches</a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" data-toggle="tab" href="#bracket">Bracket</a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link disabled" href="#">Sign Up & Confirm</a>
-    </li>
 </ul>
 
 <div id="myTabContent" class="tab-content">
@@ -33,7 +36,6 @@
                 <div class="card border-dark mb-3">
                     <div class="card-header"><i class="fas fa-quote-left mr-2"></i>Description</div>
                     <div class="card-body">
-
                         <p class="card-text">@Model.Description</p>
                     </div>
                 </div>
@@ -43,8 +45,14 @@
                     <div class="card  border-dark mb-3">
                         <div class="card-header bg-warning text-white"><i class="fas fa-user-shield mr-2"></i>Admin Actions</div>
                         <div class="card-body">
-                            <a asp-action="Start" asp-controller="Tournament" asp-area="Admin" asp-route-id="@Model.Id" class ="btn btn-success btn-block"><i class="fas fa-play-circle mr-2"></i>Start Tournament</a>
-                            
+                            @if (!Model.IsStarted)
+                            {
+                                <a asp-action="Start" asp-controller="Tournament" asp-area="Admin" asp-route-id="@Model.Id" class="btn btn-success btn-block"><i class="fas fa-play-circle mr-2"></i>Start Tournament</a>
+                            }
+                            else if (!Model.IsFinished)
+                            {
+                                <a asp-action="Start" asp-controller="Tournament" asp-area="Admin" asp-route-id="@Model.Id" class="btn btn-danger btn-block"><i class="fas fa-stop-circle mr-2"></i>Finish Tournament</a>
+                            }
                         </div>
                     </div>
                 }
@@ -56,6 +64,10 @@
                 <div class="card border-dark mb-3" style="max-height:400px;overflow:auto">
                     <div class="card-header"><i class="fas fa-list mr-2"></i>Registered Teams</div>
                     <div class="card-body">
+                        @if (Model.IsStarted)
+                        {
+                            <div class="alert-info mb-2 text-light p-2"><i class="fas fa-info-circle mr-2"></i><strong>Tournament is started!</strong></div>
+                        }
                         @foreach (var item in Model.TournamentTeams)
                         {
                             if (item.IsConfirmed)
@@ -71,23 +83,27 @@
                         {
                             <div class="alert-info mt-2 text-light p-1"><i class="fas fa-info-circle mr-2"></i>Confirmations will start at <strong>@Model.StartDate.AddMinutes(-30).ToString("dd/MM/yyyy HH:mm CET")</strong></div>
                         }
-                        else
-                        {
-                            <div class="alert-info mt-2 text-light p-1"><i class="fas fa-info-circle mr-2"></i><strong>Tournament is started!</strong></div>
-                        }
                     </div>
                 </div>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    if (Model.StartDate.AddMinutes(-30) <= DateTime.Now)
+                    if (!Model.IsStarted)
                     {
-                        <a asp-action="Confirm" asp-controller="Tournament" asp-area="Member" asp-route-id="@Model.Id" class="btn btn-info btn-block"><i class="fas fa-check-circle mr-2"></i>Confirm Registration & Fast Register</a>
+                        if (Model.StartDate.AddMinutes(-30) <= DateTime.Now)
+                        {
+                            <a asp-action="Confirm" asp-controller="Tournament" asp-area="Member" asp-route-id="@Model.Id" class="btn btn-info btn-block"><i class="fas fa-check-circle mr-2"></i>Confirm Registration & Fast Register</a>
+                        }
+                        else
+                        {
+                            <a asp-action="Register" asp-controller="Tournament" asp-area="Member" asp-route-id="@Model.Id" class="btn btn-success btn-block"><i class="fas fa-check-circle mr-2"></i>Register your team!</a>
+
+                        }
                     }
                     else
                     {
-                        <a asp-action="Register" asp-controller="Tournament" asp-area="Member" asp-route-id="@Model.Id" class="btn btn-success btn-block"><i class="fas fa-check-circle mr-2"></i>Register your team!</a>
-
+                        <a href="#bracket" class="btn btn-info btn-block"><i class="fas fa-info-circle mr-2"></i>Tournament is started.</a>
                     }
+
 
                 }
                 else
@@ -107,8 +123,27 @@
     </div>
 
 
-    <div class="tab-pane fade" id="profile">
-        <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+    <div class="tab-pane fade" id="matches">
+        @if (Model.IsStarted && teamOwnerGameList != null)
+        {
+            <table class="table table-hover w-75 mx-auto shadow table-bordered">
+                <tr>
+                    <th>Home Team</th>
+                    <th>Score</th>
+                    <th>Away Team</th>
+                </tr>
+
+                @foreach (var item in teamOwnerGameList)
+                {
+                    <tr>
+                        <td>@(item.HomeTeam?.Tag ?? "Waiting..")</td>
+                        <td>@(item.HomeTeamScore == null ? "" : item.HomeTeamScore.ToString())<strong> - </strong>@(item.AwayTeamScore == null ? "" : item.AwayTeamScore.ToString()) </td>
+                        <td>@(item.AwayTeam?.Tag ?? "Waiting..")</td>
+                    </tr>
+                }
+
+            </table>
+        }
     </div>
 
     <div class="tab-pane fade my-4 pl-5 w-75 mx-auto border border-light" id="bracket">

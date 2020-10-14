@@ -31,6 +31,11 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
            return _playedGamesDAL.GetPlayedGamesWithAllTablesByTournamentId(tournamentId);
         }
 
+        public List<PlayedGamesEntity> GetTournamentGamesByUserIdWithAll(int userId, int tournamentId)
+        {
+            return _playedGamesDAL.GetTournamentGamesByUserIdWithAll(userId, tournamentId);
+        }
+
         public TeamEntity UpdateScore(PlayedGamesEntity playedGameToBeEdited, int homeTeamScore, int awayTeamScore)
         {
             return _playedGamesDAL.UpdateScore(playedGameToBeEdited, homeTeamScore, awayTeamScore);

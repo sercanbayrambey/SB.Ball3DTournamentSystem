@@ -20,5 +20,8 @@ namespace SB.Ball3DTournamentSys.DataAccess.Interfaces
 
         PlayedGamesEntity GetByIdWithTeamTable(int id);
         List<PlayedGamesEntity> GetAllByRoundId(int roundId);
+
+        List<PlayedGamesEntity> GetTournamentGamesByUserIdWithAll(int userId, int tournamentId);
+
     }
 }

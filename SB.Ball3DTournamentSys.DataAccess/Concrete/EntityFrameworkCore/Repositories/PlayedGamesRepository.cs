@@ -29,6 +29,15 @@ namespace SB.Ball3DTournamentSys.DataAccess.Concrete.EntityFrameworkCore.Reposit
             return context.PlayedGames.Include(I => I.AwayTeam).Include(I => I.HomeTeam).Include(I => I.PlayedGamesRound).ThenInclude(I => I.Tournament).Where(I=>I.PlayedGamesRound.TournamentId==tournamentId).ToList();
         }
 
+        public List<PlayedGamesEntity> GetTournamentGamesByUserIdWithAll(int userId, int tournamentId)
+        {
+            using var context = new B3DTContext();
+            var gameList = context.PlayedGames.Include(I => I.AwayTeam).ThenInclude(I=>I.Players).Include(I => I.HomeTeam).Include(I => I.PlayedGamesRound).ThenInclude(I => I.Tournament).Where(I => I.PlayedGamesRound.TournamentId == tournamentId && ((I.HomeTeam != null && I.HomeTeam.AppUserId == userId) || (I.AwayTeam != null && I.AwayTeam.AppUserId==userId))).ToList();
+          
+
+            return gameList;
+        }
+
         public TeamEntity UpdateScore(PlayedGamesEntity playedGameToBeEdited, int homeTeamScore, int awayTeamScore)
         {
             var entity = GetByIdWithTeamTable(playedGameToBeEdited.Id);

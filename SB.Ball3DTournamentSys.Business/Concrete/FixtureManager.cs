@@ -71,6 +71,7 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
         private void GenerateFirstNonPowerOf2Round(int firstRoundPlayerCount)
         {
             List<TeamEntity> teams = Teams.Take(firstRoundPlayerCount).ToList();
+            int roundMatchIdCounter = 0;
 
             for (int i = 0; i < firstRoundPlayerCount / 2; i++)
             {
@@ -78,13 +79,16 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
                 Teams[i] = null;
                 Teams[teams.Count - (i + 1)] = null;
                 gamesToBePlayed.Add(game);
+                roundMatchIdCounter++;
             }
 
+            // adds null oppenent to first round bye's teams
             List<TeamEntity> passedTeams = Teams.Skip(firstRoundPlayerCount).ToList();
             for (int i = 0; i < passedTeams.Count; i++)
             {
-                PlayedGamesEntity game = new PlayedGamesEntity { RoundMatchId = i, HomeTeamId = passedTeams[i].Id, AwayTeamId = null, RoundNumber = 1 };
+                PlayedGamesEntity game = new PlayedGamesEntity { RoundMatchId = roundMatchIdCounter, HomeTeamId = passedTeams[i].Id, AwayTeamId = null, RoundNumber = 1 };
                 gamesToBePlayed.Add(game);
+                roundMatchIdCounter++;
             }
 
             TournamentBracketRoundEntity round = new TournamentBracketRoundEntity { RoundNumber = 1, TournamentId = TournamentId };
@@ -108,50 +112,21 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
                 {
                     //In this case, teamCount parameter represents passed team count at 1 st round
                     var teamListOn2ndRound = Teams.Where(I => I != null).ToList();
-                    int versusCounter = 0;
+                    int firstRoundGameCount = gamesToBePlayed.Count;
 
-                    for (int i = 0; i < teamCount / 2; i++)
+                    int counter = 0;
+                    for(int i =0;i<firstRoundGameCount;i++)
                     {
                         PlayedGamesEntity game = new PlayedGamesEntity();
-                        game.RoundMatchId = i;
-                        int? teamHomeId;
-                        int? teamAwayId;
-                        if(teamListOn2ndRound.Count>passedTeamCount)
-                        {
-                            if (i < passedTeamCount)
-                            {
-                                teamHomeId = teamListOn2ndRound[i]?.Id ?? null;
-                                teamAwayId = null;
-                            }
-                            else
-                            {
-                                teamHomeId = teamListOn2ndRound[i].Id;
-                                teamAwayId = teamListOn2ndRound[teamListOn2ndRound.Count - (versusCounter + 1)].Id;
-                                versusCounter++;
-                            }
-                        }
-                        else
-                        {
-                            if(i<teamListOn2ndRound.Count)
-                            {
-                                teamHomeId = teamListOn2ndRound[i]?.Id ?? null;
-                                teamAwayId = null;
-                            }
-                            else
-                            {
-                                teamHomeId = null;
-                                teamAwayId = null;
-                            }
-                        }
-                      
-
-
-
-                        game.HomeTeamId = teamHomeId;
-                        game.AwayTeamId = teamAwayId;
+                        game.RoundMatchId = counter;
+                        game.HomeTeamId = GetPassedTeamId(gamesToBePlayed[i]) ?? null;
+                        game.AwayTeamId = GetPassedTeamId(gamesToBePlayed[i + 1])?? null;
                         game.RoundNumber = round;
                         gamesToBePlayed.Add(game);
+                        counter++;
+                        i++;
                     }
+                   
                 }
                 else
                 {
@@ -193,6 +168,15 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
         public PlayedGamesEntity FindTheNextTableForGame(PlayedGamesEntity playedGame)
         {
 
+            playedGame.RoundNumber++;
+            playedGame.RoundMatchId = FindNextRoundMatchId(playedGame);
+            var playedGamesEntity = _playedGamesService.GetAllByRoundId(playedGame.RoundId);
+            var newTable = playedGamesEntity.Where(I => I.RoundMatchId == playedGame.RoundMatchId && I.RoundNumber == playedGame.RoundNumber).FirstOrDefault();
+            return newTable;
+        }
+
+        private int FindNextRoundMatchId(PlayedGamesEntity playedGame)
+        {       
             // RoundMatchId 0 - 1 = Next match will be 0
             // RoundMatchId 2-3 = Next Match will be 1
             // RoundMatchId 4-5 = Next match will be 2
@@ -201,7 +185,6 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
             //            if the RoundMatchId is 0 or 1 = next match rounId be 0
             //for others: if the RoundMatchId is even next match roundMatchId will be RoundMatchId/2
             //            if the RoundMatchId is odd next match roundMatchId will be Math.Floor(RoundMatchId/2)
-            playedGame.RoundNumber++;
 
             if (playedGame.RoundMatchId == 0 || playedGame.RoundMatchId == 1)
                 playedGame.RoundMatchId = 0;
@@ -210,10 +193,21 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
             else
                 playedGame.RoundMatchId = (int)Math.Floor((decimal)playedGame.RoundMatchId / 2);
 
-            var playedGamesEntity = _playedGamesService.GetAllByRoundId(playedGame.RoundId);
-            var newTable = playedGamesEntity.Where(I => I.RoundMatchId == playedGame.RoundMatchId && I.RoundNumber == playedGame.RoundNumber).FirstOrDefault();
-            return newTable;
+            return playedGame.RoundMatchId;
         }
+
+        private int? GetPassedTeamId (PlayedGamesEntity game)
+        {
+            if (game.HomeTeamId != null && game.AwayTeamId == null)
+                return game.HomeTeamId;
+            if (game.HomeTeamId == null && game.AwayTeamId != null)
+                return game.AwayTeamId;
+            if (game.HomeTeamId != null && game.AwayTeamId != null)
+                return null;
+
+            return null;
+        }
+
 
 
     }
