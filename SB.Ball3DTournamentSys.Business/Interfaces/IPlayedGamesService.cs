@@ -16,10 +16,11 @@ namespace SB.Ball3DTournamentSys.Business.Interfaces
         /// <param name="homeTeamScore"></param>
         /// <param name="awayTeamScore"></param>
         /// <returns>Returns the winner team.</returns>
-       TeamEntity UpdateScore(PlayedGamesEntity playedGameToBeEdited, int homeTeamScore, int awayTeamScore);
+        TeamEntity UpdateScore(PlayedGamesEntity playedGameToBeEdited, int homeTeamScore, int awayTeamScore);
         PlayedGamesEntity GetByIdWithTeamTable(int id);
         List<PlayedGamesEntity> GetAllByRoundId(int roundId);
 
         List<PlayedGamesEntity> GetTournamentGamesByUserIdWithAll(int userId, int tournamentId);
+        PlayedGamesEntity GetAllById(int id);
     }
 }

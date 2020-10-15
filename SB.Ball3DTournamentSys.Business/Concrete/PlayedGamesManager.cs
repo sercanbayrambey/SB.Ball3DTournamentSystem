@@ -16,6 +16,11 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
             _playedGamesDAL = playedGamesDAL;
         }
 
+        public PlayedGamesEntity GetAllById(int id)
+        {
+            return _playedGamesDAL.GetAllById(id);
+        }
+
         public List<PlayedGamesEntity> GetAllByRoundId(int roundId)
         {
             return _playedGamesDAL.GetAllByRoundId(roundId);

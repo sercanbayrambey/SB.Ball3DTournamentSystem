@@ -1,0 +1,37 @@
+﻿@model UpdatePlayedGameDto
+@{
+    ViewData["Title"] = "UpdateScore";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="bg-light my-4 p-4 text-center">
+
+    <div style="font-size:2em">
+        <h3><i class="fas fa-edit mr-2"></i>Update Score</h3>
+        <form asp-action="UpdateScore" method="post">
+
+            <div  asp-validation-summary="All" style="font-size:medium " class="p-1 my-1 bg-danger text-white text-left"></div>
+            <div class="border border-dark p2-">
+                <label class="badge  badge-info p-2">
+                    @Model.HomeTeam?.Tag
+                </label>
+                <input type="hidden" asp-for="@Model.Id" value="@Model.Id" />
+                <input type="hidden" asp-for="@Model.PlayedGamesRound.TournamentId" value="@Model.PlayedGamesRound.TournamentId" />
+                <input class="form-control d-inline" style="width:10%" asp-for="@Model.HomeTeamScore" value="@Model.HomeTeamScore" type="number" min="0" />
+                <input class="form-control d-inline" style="width:10%" asp-for="@Model.AwayTeamScore" value="@Model.AwayTeamScore" type="number" min="0" />
+
+                <label class="badge  badge-info p-2">
+                    @Model.AwayTeam?.Tag
+                </label>
+            </div>
+
+            <div>
+                <button type="submit" onclick="return confirm('Are you sure you want to edit this score?')" class="btn btn-success my-2 px-4 btn-block"><i class="fas fa-save mr-2"></i> Save!</button>
+                <a asp-action="Index" asp-route-tournamentId="@Model.PlayedGamesRound.TournamentId" class="btn btn-warning my-2 btn-block px-4"><i class="fas fa-arrow-alt-circle-left mr-2"></i> Back</a>
+            </div>
+        </form>
+
+    </div>
+
+</div>

@@ -48,6 +48,9 @@ namespace SB.Ball3DTournamentSys.Business.Mappers.AutoMapper
             CreateMap<StartTournamentDto, TournamentEntity>();
             CreateMap<TournamentEntity, StartTournamentDto>();
 
+            CreateMap<UpdatePlayedGameDto, PlayedGamesEntity>();
+            CreateMap<PlayedGamesEntity, UpdatePlayedGameDto>();
+
 
 
         }

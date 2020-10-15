@@ -11,7 +11,13 @@ namespace SB.Ball3DTournamentSys.DataAccess.Concrete.EntityFrameworkCore.Reposit
 {
     public class PlayedGamesRepository : EfGenericRepository<PlayedGamesEntity>, IPlayedGamesDAL
     {
-        public List<PlayedGamesEntity> GetAllByRoundId(int roundId)
+        public PlayedGamesEntity GetAllById(int id)
+        {
+            using var context = new B3DTContext();
+            return context.PlayedGames.Include(I => I.AwayTeam).Include(I => I.HomeTeam).Include(I => I.PlayedGamesRound).ThenInclude(I => I.Tournament).Where(I => I.Id ==id).FirstOrDefault();
+        }
+
+        public List<PlayedGamesEntity> GetAllByRoundId(int roundId) // Todo: its not returning all
         {
             using var context = new B3DTContext();
             return context.PlayedGames.Where(I => I.RoundId == roundId).ToList();

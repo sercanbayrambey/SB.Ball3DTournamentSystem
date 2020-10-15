@@ -52,6 +52,7 @@
                             else if (!Model.IsFinished)
                             {
                                 <a asp-action="Start" asp-controller="Tournament" asp-area="Admin" asp-route-id="@Model.Id" class="btn btn-danger btn-block"><i class="fas fa-stop-circle mr-2"></i>Finish Tournament</a>
+                                <a asp-action="Index" asp-controller="PlayedGames" asp-area="Admin" asp-route-tournamentId="@Model.Id" class="btn btn-info btn-block"><i class="fas fa-tasks mr-2"></i>Manage Games</a>
                             }
                         </div>
                     </div>
@@ -126,19 +127,35 @@
     <div class="tab-pane fade" id="matches">
         @if (Model.IsStarted && teamOwnerGameList != null)
         {
+            var currentRoundNumber = 0;
             <table class="table table-hover w-75 mx-auto shadow table-bordered">
-                <tr>
-                    <th>Home Team</th>
-                    <th>Score</th>
-                    <th>Away Team</th>
-                </tr>
 
                 @foreach (var item in teamOwnerGameList)
                 {
-                    <tr>
+                    if (currentRoundNumber == 0)
+                    {
+
+                        <tr class="text-center">
+                            <th>Home Team</th>
+                            <th>Score</th>
+                            <th>Away Team</th>
+                            <th>-/+</th>
+                        </tr>
+                    }
+
+                    if (item.RoundNumber != currentRoundNumber)
+                    {
+                        currentRoundNumber = item.RoundNumber;
+                        <tr class="text-center">
+                            <td colspan="4" class="bg-secondary text-white"><strong><i class="fas fa-futbol mr-2"></i>ROUND @currentRoundNumber<i class="fas fa-arrow-alt-circle-down ml-2"></i></strong></td>
+
+                        </tr>
+                    }
+                    <tr class="text-center">
                         <td>@(item.HomeTeam?.Tag ?? "Waiting..")</td>
-                        <td>@(item.HomeTeamScore == null ? "" : item.HomeTeamScore.ToString())<strong> - </strong>@(item.AwayTeamScore == null ? "" : item.AwayTeamScore.ToString()) </td>
+                        <td><span style="font-size:large">@(item.HomeTeamScore == null ? "" : item.HomeTeamScore.ToString())<strong> - </strong>@(item.AwayTeamScore == null ? "" : item.AwayTeamScore.ToString()) </span></td>
                         <td>@(item.AwayTeam?.Tag ?? "Waiting..")</td>
+                        <td><a class="btn btn-info"><i class="fas fa-save mr-2"></i>Add Score </a></td>
                     </tr>
                 }
 
@@ -160,7 +177,7 @@
         var bracketData;
         var isBracketActivated;
        $(document).ready(function () {
-           $.ajax({
+   @*        $.ajax({
                method: "POST",
                url: "/getBracket",
                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -172,18 +189,33 @@
                error: function (e) {
                    console.log(e);
                }
-           })
+           })*@
 
        });
 
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             var target = $(e.target).attr("href") // activated tab
             if (target == "#bracket" && !isBracketActivated) {
-                $('.bracket').bracket({
 
-                    init: bracketData /* data to initialize the bracket with */
+                $.ajax({
+                       method: "POST",
+                       url: "/getBracket",
+                       contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                       dataType: "json",
+                       data: {tournamentId:@Model.Id},
+                       success: function (data) {
+                           bracketData = data;
+                           $('.bracket').bracket({
+
+                               init: bracketData /* data to initialize the bracket with */
+                           })
+                           isBracketActivated = true;
+                       },
+                       error: function (e) {
+                           console.log(e);
+                       }
                 })
-                isBracketActivated = true;
+
             }
         });
 

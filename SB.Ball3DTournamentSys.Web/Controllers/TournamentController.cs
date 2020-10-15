@@ -58,19 +58,7 @@ namespace SB.Ball3DTournamentSys.Web.Controllers
             return Json(bm.GenerateBracketObject());
         }
 
-        public IActionResult UpdateScore(int matchId)
-        {
-            var playedGame = _playedGamesService.GetById(matchId);
-            var winnerTeam = _playedGamesService.UpdateScore(playedGame, 2, 3);
-            FixtureManager fm = new FixtureManager(_playedGamesService);
-            var nextTable = fm.FindTheNextTableForGame(playedGame);
-            if (nextTable.HomeTeamId == null)
-                nextTable.HomeTeamId = winnerTeam.Id;
-            else
-                nextTable.AwayTeamId = winnerTeam.Id;
-            _playedGamesService.Update(nextTable);
-            return RedirectToAction("Index");
-        }
+
 
     
     }

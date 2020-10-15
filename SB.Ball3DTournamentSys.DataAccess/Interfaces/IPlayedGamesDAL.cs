@@ -23,5 +23,7 @@ namespace SB.Ball3DTournamentSys.DataAccess.Interfaces
 
         List<PlayedGamesEntity> GetTournamentGamesByUserIdWithAll(int userId, int tournamentId);
 
+        PlayedGamesEntity GetAllById(int id);
+
     }
 }

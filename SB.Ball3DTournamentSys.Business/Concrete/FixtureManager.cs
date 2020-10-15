@@ -86,7 +86,7 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
             List<TeamEntity> passedTeams = Teams.Skip(firstRoundPlayerCount).ToList();
             for (int i = 0; i < passedTeams.Count; i++)
             {
-                PlayedGamesEntity game = new PlayedGamesEntity { RoundMatchId = roundMatchIdCounter, HomeTeamId = passedTeams[i].Id, AwayTeamId = null, RoundNumber = 1 };
+                PlayedGamesEntity game = new PlayedGamesEntity { RoundMatchId = roundMatchIdCounter, HomeTeamId = passedTeams[i].Id, AwayTeamId = null, RoundNumber = 1, IsFinished=true };
                 gamesToBePlayed.Add(game);
                 roundMatchIdCounter++;
             }
