@@ -43,20 +43,9 @@ namespace SB.Ball3DTournamentSys.Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var playedGame = _playedGamesService.GetById(model.Id);
                 var winnerTeam = _playedGamesService.UpdateScore(playedGame, model.HomeTeamScore.Value, model.AwayTeamScore.Value);
-                FixtureManager fm = new FixtureManager(_playedGamesService);
-                var nextTable = fm.FindTheNextTableForGame(playedGame);
-                if (nextTable != null)
-                {
-                    if (nextTable.HomeTeamId == null)
-                        nextTable.HomeTeamId = winnerTeam.Id;
-                    else
-                        nextTable.AwayTeamId = winnerTeam.Id;
-
-                    _playedGamesService.Update(nextTable);
-                }
+                _playedGamesService.AddWinnerToNextGame(playedGame, winnerTeam);
             }
             else
             {

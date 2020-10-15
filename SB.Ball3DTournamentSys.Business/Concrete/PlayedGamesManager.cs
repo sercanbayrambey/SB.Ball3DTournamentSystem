@@ -7,13 +7,29 @@ using System.Text;
 
 namespace SB.Ball3DTournamentSys.Business.Concrete
 {
-    public class PlayedGamesManager : GenericManager<PlayedGamesEntity>,IPlayedGamesService
+    public class PlayedGamesManager : GenericManager<PlayedGamesEntity>, IPlayedGamesService
 
     {
         private readonly IPlayedGamesDAL _playedGamesDAL;
         public PlayedGamesManager(IPlayedGamesDAL playedGamesDAL) : base(playedGamesDAL)
         {
             _playedGamesDAL = playedGamesDAL;
+        }
+
+        public void AddWinnerToNextGame(PlayedGamesEntity playedGame, TeamEntity winnerTeam)
+        {
+            FixtureManager fm = new FixtureManager(this);
+            var nextTable = fm.FindTheNextTableForGame(playedGame);
+            if (nextTable != null)
+            {
+                if (nextTable.HomeTeamId == null)
+                    nextTable.HomeTeamId = winnerTeam.Id;
+                else
+                    nextTable.AwayTeamId = winnerTeam.Id;
+
+                this.Update(nextTable);
+            }
+
         }
 
         public PlayedGamesEntity GetAllById(int id)
@@ -33,7 +49,7 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
 
         public List<PlayedGamesEntity> GetPlayedGamesWithAllTablesByTournamentId(int tournamentId)
         {
-           return _playedGamesDAL.GetPlayedGamesWithAllTablesByTournamentId(tournamentId);
+            return _playedGamesDAL.GetPlayedGamesWithAllTablesByTournamentId(tournamentId);
         }
 
         public List<PlayedGamesEntity> GetTournamentGamesByUserIdWithAll(int userId, int tournamentId)
@@ -44,6 +60,20 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
         public TeamEntity UpdateScore(PlayedGamesEntity playedGameToBeEdited, int homeTeamScore, int awayTeamScore)
         {
             return _playedGamesDAL.UpdateScore(playedGameToBeEdited, homeTeamScore, awayTeamScore);
+        }
+
+        public TeamEntity UpdateScore(PlayedGamesEntity playedGameToBeEdited, int homeTeamScore, int awayTeamScore, int senderUserId)
+        {
+            var playedGame = GetAllById(playedGameToBeEdited.Id);
+
+            if (senderUserId == playedGame.HomeTeam.AppUserId)
+                playedGameToBeEdited.IsHomeTeamConfirmedResult = true;
+            else if (senderUserId == playedGame.AwayTeam.AppUserId)
+                playedGameToBeEdited.IsAwayTeamConfirmedResult = true;
+            else
+                throw new Exception("You are not owner of these teams.");
+
+            return this.UpdateScore(playedGameToBeEdited, homeTeamScore, awayTeamScore);
         }
     }
 }

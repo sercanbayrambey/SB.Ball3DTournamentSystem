@@ -155,7 +155,7 @@
                         <td>@(item.HomeTeam?.Tag ?? "Waiting..")</td>
                         <td><span style="font-size:large">@(item.HomeTeamScore == null ? "" : item.HomeTeamScore.ToString())<strong> - </strong>@(item.AwayTeamScore == null ? "" : item.AwayTeamScore.ToString()) </span></td>
                         <td>@(item.AwayTeam?.Tag ?? "Waiting..")</td>
-                        <td><a class="btn btn-info"><i class="fas fa-save mr-2"></i>Add Score </a></td>
+                        <td><a asp-action="UpdateScore" asp-controller="PlayedGames" asp-area="Member" asp-route-matchId="@item.Id" class="btn btn-info"><i class="fas fa-save mr-2"></i>Edit Score </a></td>
                     </tr>
                 }
 

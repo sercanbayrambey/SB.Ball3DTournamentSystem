@@ -24,10 +24,10 @@ namespace SB.Ball3DTournamentSys.Entities.Concrete
         public TeamEntity AwayTeam { get; set; }
 
         public bool IsFinished { get; set; } = false;
+        public bool IsHomeTeamConfirmedResult { get; set; } = false;
+        public bool IsAwayTeamConfirmedResult { get; set; } = false;
 
-        /*       public int TournamentId { get; set; }
-               public TournamentEntity Tournament { get; set; }
-       */
+
 
     }
 }

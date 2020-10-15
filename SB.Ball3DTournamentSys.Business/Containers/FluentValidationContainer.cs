@@ -29,6 +29,7 @@ namespace SB.Ball3DTournamentSys.Business.Containers
             services.AddTransient<IValidator<RegisterTeamDto>, TournamentRegisterTeamValidator>();
             services.AddTransient<IValidator<JoinTeamDto>, JoinTeamValidator>();
             services.AddTransient<IValidator<UpdatePlayedGameDto>, UpdatePlayedGameValidator>();
+            services.AddTransient<IValidator<MemberUpdatePlayedGameDto>, MemberUpdatePlayedGameValidator>();
         }
     }
    
