@@ -15,7 +15,8 @@ namespace SB.Ball3DTournamentSys.Business.Containers
         {
             services.AddScoped(typeof(IGenericDAL<>), typeof(EfGenericRepository<>));
             services.AddScoped(typeof(IGenericService<>), typeof(GenericManager<>));
-            
+
+            #region Business DI
             services.AddScoped<IGameServerService, GameServerManager>();
             services.AddScoped<IPlayedGamesService, PlayedGamesManager>();
             services.AddScoped<IStadiumService, StadiumManager>();
@@ -25,7 +26,11 @@ namespace SB.Ball3DTournamentSys.Business.Containers
             services.AddScoped<ITournamentTeamsService, TournamentTeamsManager>();
             services.AddScoped<IAppUserService, AppUserManager>();
             services.AddScoped<ITournamentBracketRoundService, TournamentBracketRoundManager>();
+            services.AddScoped<IProtestService, ProtestManager>();
+            services.AddScoped<IProtestResponseService, ProtestResponseManager>();
+            #endregion
 
+            #region DAL DI
             services.AddScoped<IGameServerDAL, GameServerRepository>();
             services.AddScoped<IPlayedGamesDAL, PlayedGamesRepository>();
             services.AddScoped<IStadiumDAL, StadiumRepository>();
@@ -36,6 +41,9 @@ namespace SB.Ball3DTournamentSys.Business.Containers
             services.AddScoped<IGameServerDAL, GameServerRepository>();
             services.AddScoped<IAppUserDAL, AppUserRepository>();
             services.AddScoped<ITournamentBracketRoundDAL, TournamentBracketRoundRepository>();
+            services.AddScoped<IProtestDAL, ProtestRepository>();
+            services.AddScoped<IProtestResponseDAL, ProtestResponseRepository>(); 
+            #endregion
         }
     }
 }

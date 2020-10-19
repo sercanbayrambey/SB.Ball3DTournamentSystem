@@ -87,6 +87,8 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
             for (int i = 0; i < passedTeams.Count; i++)
             {
                 PlayedGamesEntity game = new PlayedGamesEntity { RoundMatchId = roundMatchIdCounter, HomeTeamId = passedTeams[i].Id, AwayTeamId = null, RoundNumber = 1, IsFinished=true };
+                game.IsAwayTeamConfirmedResult = true;
+                game.IsHomeTeamConfirmedResult = true;
                 gamesToBePlayed.Add(game);
                 roundMatchIdCounter++;
             }

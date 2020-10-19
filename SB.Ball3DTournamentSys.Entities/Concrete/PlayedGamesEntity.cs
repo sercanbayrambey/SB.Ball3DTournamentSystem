@@ -27,6 +27,9 @@ namespace SB.Ball3DTournamentSys.Entities.Concrete
         public bool IsHomeTeamConfirmedResult { get; set; } = false;
         public bool IsAwayTeamConfirmedResult { get; set; } = false;
 
+        public List<ProtestEntity> Protests { get; set; }
+
+
 
 
     }

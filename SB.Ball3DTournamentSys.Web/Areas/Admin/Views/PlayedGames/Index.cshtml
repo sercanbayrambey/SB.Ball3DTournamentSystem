@@ -32,7 +32,7 @@
         @if (item.RoundNumber != currentRoundNumber)
         {
             currentRoundNumber = item.RoundNumber;
-            <tr class="text-center">
+            <tr class="text-center" id="@("round"+item.RoundNumber)">
                 <td colspan="4" class="bg-secondary text-white"><strong><i class="fas fa-futbol mr-2"></i>ROUND @currentRoundNumber<i class="fas fa-arrow-alt-circle-down ml-2"></i></strong></td>
             </tr>
         }

@@ -14,7 +14,7 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
         {
             _entityDAL = entityDAL;
         }
-        public void Add(EntityTable table)
+        public virtual void Add(EntityTable table)
         {
             _entityDAL.Add(table);
         }

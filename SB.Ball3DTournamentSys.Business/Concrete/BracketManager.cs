@@ -51,8 +51,8 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
 
 
                 List<dynamic> Scores = new List<dynamic>();
-                Scores.Add(item.HomeTeamScore);
-                Scores.Add(item.AwayTeamScore);
+                Scores.Add(item != null && item.IsFinished  ?  item.HomeTeamScore : null);
+                Scores.Add(item != null && item.IsFinished  ?  item.AwayTeamScore : null);
                 RoundResults.Add(Scores);
 
                 if (currentRound != item.RoundNumber)

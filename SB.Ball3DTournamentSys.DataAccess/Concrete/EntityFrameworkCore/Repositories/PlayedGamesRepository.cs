@@ -47,9 +47,11 @@ namespace SB.Ball3DTournamentSys.DataAccess.Concrete.EntityFrameworkCore.Reposit
         public TeamEntity UpdateScore(PlayedGamesEntity playedGameToBeEdited, int homeTeamScore, int awayTeamScore)
         {
             var entity = GetByIdWithTeamTable(playedGameToBeEdited.Id);
+            entity.IsAwayTeamConfirmedResult = playedGameToBeEdited.IsAwayTeamConfirmedResult;
+            entity.IsHomeTeamConfirmedResult = playedGameToBeEdited.IsHomeTeamConfirmedResult;
+            entity.IsFinished = playedGameToBeEdited.IsFinished;
             entity.HomeTeamScore = homeTeamScore;
             entity.AwayTeamScore = awayTeamScore;
-            entity.IsFinished = true;
             Update(entity);
 
             return homeTeamScore > awayTeamScore ? entity.HomeTeam : entity.AwayTeam;

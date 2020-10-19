@@ -1,0 +1,43 @@
+﻿@model List<ProtestListAllDto>
+@{
+    ViewData["Title"] = "My Protests";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center my-4"><span class="badge badge-danger"><i class="fas fa-exclamation-triangle mr-2"></i>My Protests</span></h1>
+<hr />
+
+
+<table class="table table-hover table-bordered w-100 shadow mt-2">
+    <tr>
+        <th><i class="fas fa-calendar mr-2"></i>Date</th>
+        <th><i class="fas fa-futbol mr-2"></i>Game</th>
+        <th><i class="fas fa-heading mr-2"></i>Title</th>
+        <th><i class="fas fa-comments mr-2"></i>Answer Count</th>
+        <th><i class="fas fa-bolt mr-2"></i>Status</th>
+        <th><i class="fas fa-pencil-alt mr-2"></i>Details</th>
+    </tr>
+    @if (Model.Count == 0 )
+    {
+        <tr><td colspan="6"><h3 class="text-center text-info text-center my-2"><span class="badge badge-info"><i class="fas fa-info-circle mr-2"></i>You havent any protests.</span></h3></td></tr>
+    }
+    else
+    {
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Date.ToShortDateString()</td>
+                <td>@item.PlayedGame.HomeTeam.Tag vs @item.PlayedGame.AwayTeam.Tag</td>
+                <td><strong>@item.Title</strong></td>
+                <td>10</td>
+                <td><span class="badge badge-pill badge-success p-2">ACTIVE</span></td>
+                <td><a class="btn btn-outline-success btn-sm" asp-action="ProtestDetails" asp-route-protestId="@item.Id"><i class="fas fa-arrow-circle-right mr-2"></i>Go To Details</a></td>
+            </tr>
+        }
+    }
+
+
+</table>
+
+

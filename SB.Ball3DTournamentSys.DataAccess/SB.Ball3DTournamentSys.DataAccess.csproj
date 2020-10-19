@@ -21,6 +21,10 @@
     <Compile Remove="Migrations\20201005150007_TournamentTeamsDefaultValues.Designer.cs" />
     <Compile Remove="Migrations\20201008164323_AddedTableRound.cs" />
     <Compile Remove="Migrations\20201008164323_AddedTableRound.Designer.cs" />
+    <Compile Remove="Migrations\20201018140349_ProtestTableAdded.cs" />
+    <Compile Remove="Migrations\20201018140349_ProtestTableAdded.Designer.cs" />
+    <Compile Remove="Migrations\20201018140533_ProtestTableAdded.cs" />
+    <Compile Remove="Migrations\20201018140533_ProtestTableAdded.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

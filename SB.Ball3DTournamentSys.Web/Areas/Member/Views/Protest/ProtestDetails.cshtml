@@ -1,0 +1,55 @@
+﻿@model ProtestResponseListViewModel
+@{
+    ViewData["Title"] = "Protest Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="text-center mt-4 mb-2"><i class="fas fa-comments mr-2"></i>Protest Details</h1>
+<h3 class="text-center"><span class="badge badge-primary p-2"><i class="fas fa-futbol mr-2"></i>@Model.Protest.PlayedGame.HomeTeam.Tag @Model.Protest.PlayedGame.HomeTeamScore - @Model.Protest.PlayedGame.AwayTeamScore @Model.Protest.PlayedGame.AwayTeam.Tag</span></h3>
+<h4 class="text-center"><span class="badge badge-primary p-2"><i class="fas fa-trophy mr-2"></i>Round @Model.Protest.PlayedGame.RoundNumber</span></h4>
+<hr />
+<div class="shadow p-2 my-2">
+
+    <div class="card bg-light mb-3">
+        <div class="card-header"><span class="float-left"><i class="fas fa-pencil-alt mr-2"></i>Written By <strong>@Model.Protest.AppUser.UserName</strong></span> <span class="float-right">@Model.Protest.Date</span></div>
+        <div class="card-body">
+            <p class="card-text">@Model.Protest.Text</p>
+
+        </div>
+    </div>
+    @foreach (var item in Model.ProtestResponses)
+    {
+        <div class="card border-light mb-3">
+            <div class="card-header"><span class="float-left"><i class="fas fa-pencil-alt mr-2"></i>Written By <strong>@item.AppUser.UserName</strong></span> <span class="float-right">@item.Date</span></div>
+            <div class="card-body">
+                <p class="card-text">@item.Text</p>
+            </div>
+        </div>
+    }
+
+
+
+</div>
+
+<div class="my-2 shadow">
+
+    <div class="card border-light mb-3">
+        <div class="card-header"></div>
+        <div class="card-body">
+            <form method="post" asp-action="AddAnswer">
+                <div class="form-group">
+                    <label ><i class="fas fa-pencil-alt mr-2"></i>Write an answer:</label>
+                    <textarea  class="form-control" name="Text" rows="5" maxlength="512"></textarea>
+                    <input type="hidden" name="AppUserId" value="@ViewBag.LoggedUserId" />
+                    <input type="hidden" name="ProtestId" value="@Model.Protest.Id" />
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="float-right btn btn-success"><i class="fas fa-share mr-2"></i>Send</button>
+                    <a asp-action="Index" asp-area="Member" asp-controller="Protest" class="float-left btn btn-warning"><i class="fas fa-arrow-circle-left mr-2"></i>Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+

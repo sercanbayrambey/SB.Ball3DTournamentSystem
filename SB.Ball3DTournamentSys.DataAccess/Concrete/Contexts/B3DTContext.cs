@@ -25,6 +25,10 @@ namespace SB.Ball3DTournamentSys.DataAccess.Concrete.Contexts
             modelBuilder.ApplyConfiguration(new TeamEntityMapping());
             modelBuilder.ApplyConfiguration(new TeamPlayersEntityMapping());
             modelBuilder.ApplyConfiguration(new TournamentTeamsEntityMapping());
+            modelBuilder.ApplyConfiguration(new TournamentBracketRoundEntityMapping());
+            modelBuilder.ApplyConfiguration(new ProtestsMapping());
+            modelBuilder.ApplyConfiguration(new ProtestResponseMapping());
+            modelBuilder.ApplyConfiguration(new AppUserMapping());
             base.OnModelCreating(modelBuilder);
         }
 
@@ -37,6 +41,9 @@ namespace SB.Ball3DTournamentSys.DataAccess.Concrete.Contexts
         public DbSet<TournamentTeamsEntity> TournamentTeams { get; set; }
 
         public DbSet<TournamentBracketRoundEntity> TournamentBracketRounds { get; set; }
+
+        public DbSet<ProtestEntity> Protests{ get; set; }
+        public DbSet<ProtestResponseEntity> ProtestsResponses{ get; set; }
 
 
     }

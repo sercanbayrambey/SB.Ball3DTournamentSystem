@@ -10,6 +10,7 @@ namespace SB.Ball3DTournamentSys.Business.Interfaces
         List<TeamEntity> GetOwnedTeamsByUserId(int id);
         string GenerateInviteLink();
         TeamEntity GetTeamByInviteCodeWithUserTable(string inviteCode);
+        bool IsUserOwner(int userId, int teamId);
         
     }
 }

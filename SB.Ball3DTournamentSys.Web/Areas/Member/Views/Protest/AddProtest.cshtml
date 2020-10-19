@@ -1,0 +1,41 @@
+﻿@model CreateProtestDto
+@{
+    ViewData["Title"] = "Open New Protest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var game = (SB.Ball3DTournamentSys.Entities.Concrete.PlayedGamesEntity)ViewBag.Game;
+}
+
+<h2 class="mt-4 text-center"><span class="card-text badge badge-danger p-3 badge-pill"><strong>Open New Protest<i class="fas fa-exclamation-triangle ml-2"></i></strong></span></h2>
+<h3 class="mt-1 text-center"><span class="card-text badge badge-info p-3 "><strong><i class="fas fa-futbol mr-2"></i>@game.HomeTeam.Tag @game.HomeTeamScore - @game.AwayTeamScore @game.AwayTeam.Tag</strong></span></h3>
+<hr />
+
+<form class="mt-2 p-4 shadow" method="post" asp-action="AddProtest">
+    <h4 class="my-1 text-center">Open New Protest<i class="fas fa-exclamation-triangle ml-2"></i></h4>
+    <hr />
+    <div asp-validation-summary="All" class="text-danger my-1"></div>
+    <div class="form-group">
+        <label><i class="fas fa-heading mr-2"></i>Protest Title</label>
+        <span asp-validation-for="Title" class="text-danger"></span>
+        <input asp-for="Title" class="form-control" type="text">
+    </div>
+    <div class="form-group">
+        <label><i class="fas fa-envelope-open mr-2"></i>Your message:</label>
+        <span asp-validation-for="Text" class="text-danger"></span>
+        <textarea asp-for="Text" class="form-control" id="exampleTextarea" rows="3"></textarea>
+    </div>
+    <input asp-for="PlayedGameId" type="hidden" value="@game.Id" />
+    <input asp-for="AppUserId" type="hidden" value="@ViewBag.LoggedUserId" />
+    <div class="form-group">
+        <button type="submit" class="btn btn-success btn-block"><i class="fas fa-share-square mr-2"></i>Send</button>
+        <a class="btn btn-warning btn-block btn-sm"><i class="fas fa-arrow-alt-circle-left mr-2"></i>Back</a>
+    </div>
+</form>
+
+<hr />
+
+@section JavaScript{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}
+
+

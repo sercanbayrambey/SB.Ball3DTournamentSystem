@@ -41,6 +41,7 @@ namespace SB.Ball3DTournamentSys.Web.Controllers
             if(model.IsStarted && IsLogged())
             {
                 ViewBag.Games = _mapper.Map<List<PlayedGamesListAllDto>>(_playedGamesService.GetTournamentGamesByUserIdWithAll(GetLoggedUser().Id, model.Id));
+                ViewBag.LoggedUserId = GetLoggedUser().Id;
             }
 
 

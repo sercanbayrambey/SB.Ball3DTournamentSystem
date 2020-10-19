@@ -19,10 +19,11 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
         public void AddWinnerToNextGame(PlayedGamesEntity playedGame, TeamEntity winnerTeam)
         {
             FixtureManager fm = new FixtureManager(this);
+            var roundMatchId = playedGame.RoundMatchId;
             var nextTable = fm.FindTheNextTableForGame(playedGame);
             if (nextTable != null)
             {
-                if (nextTable.HomeTeamId == null)
+                if(roundMatchId % 2 == 0)
                     nextTable.HomeTeamId = winnerTeam.Id;
                 else
                     nextTable.AwayTeamId = winnerTeam.Id;
@@ -59,13 +60,16 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
 
         public TeamEntity UpdateScore(PlayedGamesEntity playedGameToBeEdited, int homeTeamScore, int awayTeamScore)
         {
+            playedGameToBeEdited.IsHomeTeamConfirmedResult = true; // Because sender is admin
+            playedGameToBeEdited.IsAwayTeamConfirmedResult = true;
+            playedGameToBeEdited.IsFinished = true;
             return _playedGamesDAL.UpdateScore(playedGameToBeEdited, homeTeamScore, awayTeamScore);
         }
 
         public TeamEntity UpdateScore(PlayedGamesEntity playedGameToBeEdited, int homeTeamScore, int awayTeamScore, int senderUserId)
         {
             var playedGame = GetAllById(playedGameToBeEdited.Id);
-
+            playedGame.IsFinished = false;
             if (senderUserId == playedGame.HomeTeam.AppUserId)
                 playedGameToBeEdited.IsHomeTeamConfirmedResult = true;
             else if (senderUserId == playedGame.AwayTeam.AppUserId)
@@ -73,7 +77,11 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
             else
                 throw new Exception("You are not owner of these teams.");
 
-            return this.UpdateScore(playedGameToBeEdited, homeTeamScore, awayTeamScore);
+            if (playedGameToBeEdited.IsAwayTeamConfirmedResult && playedGameToBeEdited.IsHomeTeamConfirmedResult)
+                playedGameToBeEdited.IsFinished = true;
+
+            return _playedGamesDAL.UpdateScore(playedGameToBeEdited, homeTeamScore, awayTeamScore);
         }
+
     }
 }

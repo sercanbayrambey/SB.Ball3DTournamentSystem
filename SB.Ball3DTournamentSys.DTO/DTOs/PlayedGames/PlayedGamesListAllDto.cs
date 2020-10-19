@@ -22,5 +22,7 @@ namespace SB.Ball3DTournamentSys.DTO.DTOs.PlayedGames
         public TeamEntity AwayTeam { get; set; }
 
         public bool IsFinished { get; set; } = false;
+        public bool IsHomeTeamConfirmedResult { get; set; } = false;
+        public bool IsAwayTeamConfirmedResult { get; set; } = false;
     }
 }

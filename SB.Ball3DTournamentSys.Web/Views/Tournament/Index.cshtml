@@ -1,8 +1,13 @@
 ﻿@model TournamentListAllDto
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = ($"{Model.Name} {Model.GameType}v{Model.GameType}");
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<PlayedGamesListAllDto> teamOwnerGameList = null;
+    int? loggedUserId = null;
+    if (ViewBag.LoggedUserId != null)
+    {
+        loggedUserId = ViewBag.LoggedUserId;
+    }
     if (ViewBag.Games != null)
     {
         teamOwnerGameList = ViewBag.Games;
@@ -125,7 +130,7 @@
 
 
     <div class="tab-pane fade" id="matches">
-        @if (Model.IsStarted && teamOwnerGameList != null)
+        @if (Model.IsStarted && teamOwnerGameList != null && User.Identity.IsAuthenticated)
         {
             var currentRoundNumber = 0;
             <table class="table table-hover w-75 mx-auto shadow table-bordered">
@@ -152,10 +157,58 @@
                         </tr>
                     }
                     <tr class="text-center">
-                        <td>@(item.HomeTeam?.Tag ?? "Waiting..")</td>
-                        <td><span style="font-size:large">@(item.HomeTeamScore == null ? "" : item.HomeTeamScore.ToString())<strong> - </strong>@(item.AwayTeamScore == null ? "" : item.AwayTeamScore.ToString()) </span></td>
-                        <td>@(item.AwayTeam?.Tag ?? "Waiting..")</td>
-                        <td><a asp-action="UpdateScore" asp-controller="PlayedGames" asp-area="Member" asp-route-matchId="@item.Id" class="btn btn-info"><i class="fas fa-save mr-2"></i>Edit Score </a></td>
+
+
+                        @if (item.IsFinished)
+                        {
+                            <td>@(item.HomeTeam?.Tag ?? "BYE")</td>
+                            <td><span style="font-size:large">@(item.HomeTeamScore == null ? "" : item.HomeTeamScore.ToString())<strong> - </strong>@(item.AwayTeamScore == null ? "" : item.AwayTeamScore.ToString()) </span></td>
+                            <td>@(item.AwayTeam?.Tag ?? "BYE")</td>
+                            <td><p class="badge badge-success p-2" style="font-size:small"><i class="fas fa-check mr-2"></i>CONFIRMED / FINISHED</p></td>
+                        }
+                        else
+                        {
+                            <td>@(item.HomeTeam?.Tag ?? "Waiting..")</td>
+                            <td><span style="font-size:large">@(item.HomeTeamScore == null ? "" : item.HomeTeamScore.ToString())<strong> - </strong>@(item.AwayTeamScore == null ? "" : item.AwayTeamScore.ToString()) </span></td>
+                            <td>@(item.AwayTeam?.Tag ?? "Waiting..")</td>
+                            if (item.HomeTeam != null && item.AwayTeam != null)
+                            {
+                                if ((item.IsHomeTeamConfirmedResult && item.HomeTeam.AppUserId == loggedUserId) || (item.IsAwayTeamConfirmedResult && item.AwayTeam.AppUserId == loggedUserId))
+                                {
+                                    <td>
+                                        <p class="badge badge-warning p-2" style="font-size:small"><i class="fas fa-check mr-2"></i>You confirmed the result. Waiting for other team owner.</p>
+                                        <a asp-action="UpdateScore" asp-controller="PlayedGames" asp-area="Member" asp-route-matchId="@item.Id" class="btn btn-info btn-sm"><i class="fas fa-edit mr-2"></i>Edit Result</a>
+
+                                        <span class="badge badge-primary p-2 mt-1" style="font-size:small"><i class="fas fa-info-circle mr-2"></i> If other team captain is not confirming the result, <a class="btn-link" asp-action="AddProtest" asp-controller="Protest" asp-area="Member" asp-route-matchId="@item.Id"><strong>click here for open protest!</strong></a></span>
+                                    </td>
+
+                                }
+                                else
+                                {
+                                    @if (item.IsAwayTeamConfirmedResult || item.IsHomeTeamConfirmedResult)
+                                    {
+                                        <td>
+                                            <div>
+                                                <form asp-action="ConfirmResult" asp-controller="PlayedGames" asp-area="Member">
+                                                    <input type="hidden" name="matchId" value="@item.Id" />
+                                                    <button type="submit" onclick="return confirm('Are you sure you want to confirm this game?')" class="btn btn-info"><i class="fas fa-check-circle mr-2"></i>Confirm Result <strong>(@item.HomeTeam.Tag @item.HomeTeamScore - @item.AwayTeamScore @item.AwayTeam.Tag)</strong></button><br />
+                                                </form>
+
+                                                <span class="badge badge-primary p-2 mt-1" style="font-size:small"><i class="fas fa-info-circle mr-2"></i> If the result is not true, <a class="btn-link" asp-action="AddProtest" asp-controller="Protest" asp-area="Member" asp-route-matchId="@item.Id"><strong>click here for open protest!</strong></a></span>
+                                            </div>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <a asp-action="UpdateScore" asp-controller="PlayedGames" asp-area="Member" asp-route-matchId="@item.Id" class="btn btn-info"><i class="fas fa-check mr-2"></i>Add Result</a>
+
+                                        </td>
+                                    }
+
+                                }
+                            }
+                        }
                     </tr>
                 }
 
@@ -176,22 +229,6 @@
     <script>
         var bracketData;
         var isBracketActivated;
-       $(document).ready(function () {
-   @*        $.ajax({
-               method: "POST",
-               url: "/getBracket",
-               contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-               dataType: "json",
-               data: {tournamentId:@Model.Id},
-               success: function (data) {
-                   bracketData = data;
-               },
-               error: function (e) {
-                   console.log(e);
-               }
-           })*@
-
-       });
 
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             var target = $(e.target).attr("href") // activated tab

@@ -33,11 +33,14 @@ namespace SB.Ball3DTournamentSys.Web.Areas.Member.Controllers
         {
             var model = _mapper.Map<MemberUpdatePlayedGameDto>(_playedGamesService.GetAllById(matchId));
             model.LoggedUserId = GetLoggedUser().Id;
-            if (model == null)
+            if (model == null || model.HomeTeamId==null || model.AwayTeamId == null)
                 return NotFound();
             return View(model);
         }
 
+
+
+        //TOOD: Refactor needed
 
         [HttpPost]
         public IActionResult UpdateScore(MemberUpdatePlayedGameDto model)
@@ -50,8 +53,13 @@ namespace SB.Ball3DTournamentSys.Web.Areas.Member.Controllers
                     return Unauthorized();
 
                 var playedGame = _playedGamesService.GetById(model.Id);
+
+                if(playedGame.IsFinished)
+                    throw new Exception("Game is finished.");
+
                 var winnerTeam = _playedGamesService.UpdateScore(playedGame, model.HomeTeamScore.Value, model.AwayTeamScore.Value,loggedUserId);
-                _playedGamesService.AddWinnerToNextGame(playedGame, winnerTeam);
+                if(playedGame.IsAwayTeamConfirmedResult && playedGame.IsHomeTeamConfirmedResult)
+                    _playedGamesService.AddWinnerToNextGame(playedGame, winnerTeam); // not yet!
             
             }
             else
@@ -59,7 +67,34 @@ namespace SB.Ball3DTournamentSys.Web.Areas.Member.Controllers
                 model = _mapper.Map<MemberUpdatePlayedGameDto>(_playedGamesService.GetAllById(model.Id));
                 return View(model);
             }
-            return RedirectToAction("Index", new { Id = model.PlayedGamesRound.TournamentId });
+            return RedirectToAction("Index","Tournament", new {area="", Id = model.PlayedGamesRound.TournamentId });
+        }
+
+
+        [HttpPost]
+        public IActionResult ConfirmResult(int matchId, int userId)
+        {
+
+            var playedGame = _playedGamesService.GetAllById(matchId);
+            if (playedGame == null)
+                return NotFound();
+
+            if (playedGame.IsAwayTeamConfirmedResult && playedGame.IsHomeTeamConfirmedResult)
+                throw new Exception("Game is already confirmed.");
+
+            UpdateScore(new MemberUpdatePlayedGameDto
+            {
+                AwayTeamId = playedGame.AwayTeamId,
+                HomeTeamId = playedGame.HomeTeamId,
+                AwayTeamScore = playedGame.AwayTeamScore,
+                HomeTeamScore = playedGame.HomeTeamScore,
+                PlayedGamesRound = playedGame.PlayedGamesRound,
+                LoggedUserId = GetLoggedUser().Id,
+                Id = playedGame.Id
+            });;
+
+            return RedirectToAction("Index", "Tournament", new { area = "", Id = playedGame.PlayedGamesRound.TournamentId });
+
         }
     }
 }

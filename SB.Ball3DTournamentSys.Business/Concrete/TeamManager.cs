@@ -29,5 +29,15 @@ namespace SB.Ball3DTournamentSys.Business.Concrete
         {
             return _teamDAL.GetTeamByInviteCodeWithUserTable(inviteCode);
         }
+
+        public bool IsUserOwner(int userId, int teamId)
+        {
+            var team = GetById(teamId);
+            if (team == null)
+                return false;
+            if (team.AppUserId == userId)
+                return true;
+            return false;
+        }
     }
 }

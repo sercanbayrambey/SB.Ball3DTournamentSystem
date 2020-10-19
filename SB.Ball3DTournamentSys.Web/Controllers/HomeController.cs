@@ -12,19 +12,20 @@ using SB.Ball3DTournamentSys.DTO.DTOs.AppUserDto;
 using SB.Ball3DTournamentSys.DTO.DTOs.GameServers;
 using SB.Ball3DTournamentSys.DTO.DTOs.Tournament;
 using SB.Ball3DTournamentSys.Entities.Concrete;
+using SB.Ball3DTournamentSys.Web.BaseControllers;
 using SB.Ball3DTournamentSys.Web.Models;
 using SB.Ball3DTournamentSys.Web.StringConsts;
 
 namespace SB.Ball3DTournamentSys.Web.Controllers
 {
   
-    public class HomeController : Controller
+    public class HomeController : IdentityBaseController
     {
         private readonly IMapper _mapper;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
         private readonly ITournamentService _tournamentService;
-        public HomeController(ITournamentService tournamentService, IMapper mapper, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
+        public HomeController(ITournamentService tournamentService, IMapper mapper, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager) : base(userManager)
         {
             _tournamentService = tournamentService;
             _mapper = mapper;
@@ -44,6 +45,8 @@ namespace SB.Ball3DTournamentSys.Web.Controllers
 
         public IActionResult Login()
         {
+            if (IsLogged())
+                return RedirectToAction("Index");
             return View(new AppUserLoginDTO());
         }
 
@@ -52,7 +55,7 @@ namespace SB.Ball3DTournamentSys.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(AppUserLoginDTO model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && !IsLogged())
             {
                 var appUser = await _userManager.FindByNameAsync(model.UserName);
                 if (appUser != null)

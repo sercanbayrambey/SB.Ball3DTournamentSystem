@@ -28,7 +28,7 @@
 
             <div>
                 <button type="submit" onclick="return confirm('Are you sure you want to edit this score?')" class="btn btn-success my-2 px-4 btn-block"><i class="fas fa-save mr-2"></i> Save!</button>
-                <a asp-action="Index" asp-route-tournamentId="@Model.PlayedGamesRound.TournamentId" class="btn btn-warning my-2 btn-block px-4"><i class="fas fa-arrow-alt-circle-left mr-2"></i> Back</a>
+                <a asp-action="Index" asp-route-tournamentId="@Model.PlayedGamesRound.TournamentId" asp-area="" class="btn btn-warning my-2 btn-block px-4"><i class="fas fa-arrow-alt-circle-left mr-2"></i> Back</a>
             </div>
         </form>
 

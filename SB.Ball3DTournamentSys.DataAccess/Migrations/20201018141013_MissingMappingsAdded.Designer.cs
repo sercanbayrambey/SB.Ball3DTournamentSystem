@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SB.Ball3DTournamentSys.DataAccess.Concrete.Contexts;
 
 namespace SB.Ball3DTournamentSys.DataAccess.Migrations
 {
     [DbContext(typeof(B3DTContext))]
-    partial class B3DTContextModelSnapshot : ModelSnapshot
+    [Migration("20201018141013_MissingMappingsAdded")]
+    partial class MissingMappingsAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -296,9 +298,6 @@ namespace SB.Ball3DTournamentSys.DataAccess.Migrations
                     b.Property<int>("AppUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("PlayedGameId")
                         .HasColumnType("int");
 
@@ -328,9 +327,6 @@ namespace SB.Ball3DTournamentSys.DataAccess.Migrations
 
                     b.Property<int>("AppUserId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("ProtestId")
                         .HasColumnType("int");

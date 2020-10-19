@@ -2,6 +2,8 @@
 using SB.Ball3DTournamentSys.DTO.DTOs.AppUserDto;
 using SB.Ball3DTournamentSys.DTO.DTOs.GameServers;
 using SB.Ball3DTournamentSys.DTO.DTOs.PlayedGames;
+using SB.Ball3DTournamentSys.DTO.DTOs.Protest;
+using SB.Ball3DTournamentSys.DTO.DTOs.ProtestResponse;
 using SB.Ball3DTournamentSys.DTO.DTOs.Team;
 using SB.Ball3DTournamentSys.DTO.DTOs.Tournament;
 using SB.Ball3DTournamentSys.Entities.Concrete;
@@ -53,6 +55,15 @@ namespace SB.Ball3DTournamentSys.Business.Mappers.AutoMapper
 
             CreateMap<MemberUpdatePlayedGameDto, PlayedGamesEntity>();
             CreateMap<PlayedGamesEntity, MemberUpdatePlayedGameDto>();
+
+            CreateMap<ProtestEntity, CreateProtestDto>();
+            CreateMap<CreateProtestDto, ProtestEntity>();
+
+            CreateMap<ProtestListAllDto, ProtestEntity>();
+            CreateMap<ProtestEntity, ProtestListAllDto>();
+
+            CreateMap<ProtestResponseListAllDto, ProtestResponseEntity>();
+            CreateMap<ProtestResponseEntity, ProtestResponseListAllDto>();
 
 
 

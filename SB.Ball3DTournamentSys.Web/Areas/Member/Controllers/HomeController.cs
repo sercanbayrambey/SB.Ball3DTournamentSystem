@@ -8,8 +8,8 @@ using SB.Ball3DTournamentSys.Web.StringConsts;
 
 namespace SB.Ball3DTournamentSys.Web.Areas.Member.Controllers
 {
+    [Authorize(Roles = ConstRoles.Member)]
     [Area(ConstAreas.Member)]
-    [Authorize]
     public class HomeController : Controller
     {
         public IActionResult Index()
