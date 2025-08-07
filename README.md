@@ -4,6 +4,15 @@ A comprehensive web-based tournament management system designed for Ball 3D gami
 
 ## ✨ Features
 
+## 📸 Screenshots
+
+![Tournament List](https://user-images.githubusercontent.com/45638332/97360721-9bf80c00-18af-11eb-84d7-97799207a0b3.png)
+![Tournament Bracket](https://user-images.githubusercontent.com/45638332/97360752-a6b2a100-18af-11eb-895d-ecdd5f1d45cc.png)
+![Team Management](https://user-images.githubusercontent.com/45638332/97360791-b631ea00-18af-11eb-91a5-8363fb0a3d92.png)
+![Game Results](https://user-images.githubusercontent.com/45638332/97361019-0a3cce80-18b0-11eb-95a3-f1500bc9baf3.png)
+![Tournament Registration](https://user-images.githubusercontent.com/45638332/97361063-1759bd80-18b0-11eb-8220-c65e084a323d.png)
+
+
 ### 🏆 Tournament Management
 - **Single Elimination Tournaments**: Create bracket-style tournaments with automatic fixture generation
 - **Tournament Lifecycle**: Support for upcoming, active, and completed tournaments
@@ -112,13 +121,6 @@ The system automatically seeds with:
 - **Data Validation**: Comprehensive input validation
 - **Anti-forgery Tokens**: CSRF protection
 
-## 📸 Screenshots
-
-![Tournament List](https://user-images.githubusercontent.com/45638332/97360721-9bf80c00-18af-11eb-84d7-97799207a0b3.png)
-![Tournament Bracket](https://user-images.githubusercontent.com/45638332/97360752-a6b2a100-18af-11eb-895d-ecdd5f1d45cc.png)
-![Team Management](https://user-images.githubusercontent.com/45638332/97360791-b631ea00-18af-11eb-91a5-8363fb0a3d92.png)
-![Game Results](https://user-images.githubusercontent.com/45638332/97361019-0a3cce80-18b0-11eb-95a3-f1500bc9baf3.png)
-![Tournament Registration](https://user-images.githubusercontent.com/45638332/97361063-1759bd80-18b0-11eb-8220-c65e084a323d.png)
 
 ## 🤝 Contributing
 
