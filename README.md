@@ -2,7 +2,6 @@
 
 A comprehensive web-based tournament management system designed for Ball 3D gaming competitions. This application allows users to create and manage single-elimination tournaments, form teams, register for competitions, and track game results in real-time.
 
-## ✨ Features
 
 ## 📸 Screenshots
 
@@ -11,6 +10,8 @@ A comprehensive web-based tournament management system designed for Ball 3D gami
 ![Team Management](https://user-images.githubusercontent.com/45638332/97360791-b631ea00-18af-11eb-91a5-8363fb0a3d92.png)
 ![Game Results](https://user-images.githubusercontent.com/45638332/97361019-0a3cce80-18b0-11eb-95a3-f1500bc9baf3.png)
 ![Tournament Registration](https://user-images.githubusercontent.com/45638332/97361063-1759bd80-18b0-11eb-8220-c65e084a323d.png)
+
+## ✨ Features
 
 
 ### 🏆 Tournament Management
